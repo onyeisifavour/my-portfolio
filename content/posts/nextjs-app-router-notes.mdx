@@ -1,0 +1,33 @@
+---
+title: Notes on the Next.js App Router
+description: A few practical reminders after wiring a portfolio with server components and local content.
+date: 2026-10-02
+tags: [nextjs, react, notes]
+---
+
+A few reminders that helped while putting this site together:
+
+## Prefer server by default
+
+Fetch content on the server. Reach for `"use client"` only when you need state, effects, or browser APIs — like the Projects / Blog tabs.
+
+## Keep routes boring
+
+- `/` for the portfolio surface
+- `/blog/[slug]` for articles
+- Query params (`?tab=blog`) for lightweight UI state you want to share
+
+## Cache intentional reads
+
+With Cache Components enabled, wrap filesystem reads in `"use cache"` so post listings stay part of the static shell instead of turning into request-time work.
+
+```md
+---
+title: Example
+date: 2026-10-02
+---
+
+Hello from Markdown.
+```
+
+Small constraints keep the site fast and easy to reason about.

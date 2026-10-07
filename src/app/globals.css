@@ -1,26 +1,199 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f2f5f8;
+  --paper-deep: #e4ebf2;
+  --ink: #132033;
+  --accent: #0f6e8c;
+  --accent-soft: #c5e4ee;
+  --grid: rgba(19, 32, 51, 0.055);
+}
+
+html.dark {
+  --paper: #0f1620;
+  --paper-deep: #172131;
+  --ink: #e7eef6;
+  --accent: #5eb8d4;
+  --accent-soft: #1a3a48;
+  --grid: rgba(231, 238, 246, 0.06);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklab, var(--paper) 82%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+  }
+
+  .hero-atmosphere {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        90% 70% at 12% 8%,
+        color-mix(in oklab, var(--accent) 18%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        70% 55% at 88% 18%,
+        color-mix(in oklab, var(--accent-soft) 70%, transparent),
+        transparent 50%
+      ),
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--paper-deep) 75%, white) 0%,
+        var(--paper) 48%,
+        color-mix(in oklab, var(--accent-soft) 28%, var(--paper)) 100%
+      );
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+
+  .hero-atmosphere::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.9;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: 0.2rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition:
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    border-radius: 0.2rem;
+    border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent);
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .btn-ghost:hover {
+    border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+    background: color-mix(in oklab, var(--accent-soft) 45%, transparent);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 700ms ease both;
+}
+
+.animate-rise {
+  animation: rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-rise-delay-1 {
+  animation: rise 750ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+.animate-rise-delay-2 {
+  animation: rise 800ms cubic-bezier(0.22, 1, 0.36, 1) 160ms both;
+}
+
+.animate-rise-delay-3 {
+  animation: rise 850ms cubic-bezier(0.22, 1, 0.36, 1) 240ms both;
+}
+
+.animate-panel {
+  animation: panel-in 280ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-rise,
+  .animate-rise-delay-1,
+  .animate-rise-delay-2,
+  .animate-rise-delay-3,
+  .animate-panel {
+    animation: none;
+  }
 }

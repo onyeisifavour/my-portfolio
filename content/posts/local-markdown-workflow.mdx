@@ -1,0 +1,22 @@
+---
+title: A local Markdown workflow for a study blog
+description: Keep posts as files, ship them with the App Router, and skip the CMS until you need one.
+date: 2026-09-28
+tags: [markdown, nextjs, workflow]
+---
+
+For a personal study blog, a folder of Markdown files is often enough.
+
+## The shape
+
+1. Drop a `.md` or `.mdx` file into `content/posts`
+2. Add frontmatter: `title`, `description`, `date`, `tags`
+3. Reload — the Blog tab lists it, and `/blog/[slug]` renders it
+
+## Why this works
+
+- Posts live in git with the rest of the site
+- No dashboard, API keys, or sync jobs
+- Diffs are readable in pull requests
+
+When the writing habit outgrows the folder, you can migrate. Until then, files win.
