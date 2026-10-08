@@ -18,7 +18,7 @@ function ArrowIcon() {
 export function LatestProjectCard() {
   return (
     <a
-      href="/explore/projects"
+      href="/explore/projects?page=latest"
       className="group flex w-full items-center justify-between gap-6 border border-accent/25 bg-accent-soft/25 px-6 py-5 transition-colors hover:border-accent/45 hover:bg-accent-soft/40 sm:px-8 sm:py-6"
     >
       <div className="flex flex-col gap-2">

@@ -5,8 +5,9 @@ import { useTransition } from "react";
 import type { PostMeta } from "@/lib/posts";
 import type { Project } from "@/lib/projects";
 import { BlogList } from "@/components/blog-list";
+import { ExploreGrid } from "@/components/explore-grid";
 import { LatestBlogCard, LatestProjectCard } from "@/components/latest-card";
-import { ProjectList } from "@/components/project-list";
+import { explorePages } from "@/lib/project-groups";
 
 type Tab = "projects" | "blog";
 
@@ -88,7 +89,7 @@ export function ContentTabs({
         {tab === "projects" ? (
           <div className="flex flex-col gap-8">
             <LatestProjectCard />
-            <ProjectList projects={projects} />
+            <ExploreGrid pages={explorePages} />
           </div>
         ) : (
           <div className="flex flex-col gap-8">
