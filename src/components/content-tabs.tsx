@@ -5,6 +5,7 @@ import { useTransition } from "react";
 import type { PostMeta } from "@/lib/posts";
 import type { Project } from "@/lib/projects";
 import { BlogList } from "@/components/blog-list";
+import { LatestBlogCard, LatestProjectCard } from "@/components/latest-card";
 import { ProjectList } from "@/components/project-list";
 
 type Tab = "projects" | "blog";
@@ -85,9 +86,15 @@ export function ContentTabs({
         key={tab}
       >
         {tab === "projects" ? (
-          <ProjectList projects={projects} />
+          <div className="flex flex-col gap-8">
+            <LatestProjectCard />
+            <ProjectList projects={projects} />
+          </div>
         ) : (
-          <BlogList posts={posts} />
+          <div className="flex flex-col gap-8">
+            <LatestBlogCard />
+            <BlogList posts={posts} />
+          </div>
         )}
       </div>
     </section>
