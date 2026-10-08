@@ -16,12 +16,12 @@ const STATUS_STYLES: Record<GroupProject["status"], string> = {
   archived: "border-ink/12 bg-ink/[0.03] text-ink/50",
 };
 
-function ArrowIcon() {
+function ArrowIcon({ className = "" }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
-      className="size-3.5"
+      className={className || "size-3.5"}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.6"
@@ -33,49 +33,89 @@ function ArrowIcon() {
   );
 }
 
+function StatusBadge({ status }: { status: GroupProject["status"] }) {
+  return (
+    <span
+      className={`grid shrink-0 place-items-center border px-2 py-0.5 font-mono text-[9.5px] tracking-[0.1em] uppercase ${STATUS_STYLES[status]}`}
+    >
+      {STATUS_LABELS[status]}
+    </span>
+  );
+}
+
+function Tags({ tags }: { tags: string[] }) {
+  if (tags.length === 0) return null;
+  return (
+    <ul className="flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <li
+          key={tag}
+          className="border border-ink/10 bg-paper-deep/45 px-1.5 py-0.5 font-mono text-[10px] tracking-[0.03em] text-ink/68"
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function FeaturedProject({ project }: { project: GroupProject }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group flex flex-col gap-4 border border-ink/10 bg-paper/50 p-5 transition-colors duration-200 hover:border-accent/45 hover:bg-accent-soft/22 sm:flex-row sm:items-start sm:justify-between sm:gap-8"
+    >
+      <div className="min-w-0 flex-1">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="font-mono text-[10px] tracking-[0.12em] text-ink/42">
+            01
+          </span>
+          <StatusBadge status={project.status} />
+        </div>
+        <h4 className="font-display text-2xl leading-tight font-semibold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-3xl">
+          {project.title}
+        </h4>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink/62">
+          {project.about}
+        </p>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-3">
+          <Tags tags={project.tags} />
+          <span className="ml-auto inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.1em] text-ink/50 uppercase transition-colors group-hover:text-accent">
+            Open project
+            <ArrowIcon />
+          </span>
+        </div>
+      </div>
+      <span className="shrink-0 font-mono text-[10px] tracking-[0.08em] text-ink/42">
+        {project.year}
+      </span>
+    </Link>
+  );
+}
+
 function ProjectPanel({ project, index }: { project: GroupProject; index: number }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group flex min-h-[172px] flex-col gap-2.5 border border-ink/10 bg-paper/50 p-4 transition-colors duration-200 hover:-translate-y-0.5 hover:border-accent/45 hover:bg-accent-soft/22"
+      className="group flex min-h-[190px] flex-col bg-paper/50 p-4 transition-colors duration-200 hover:-translate-y-0.5 hover:bg-accent-soft/22"
     >
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-[10px] tracking-[0.12em] text-ink/42">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span
-          className={`border px-1.5 py-0.5 font-mono text-[9.5px] tracking-[0.1em] uppercase ${STATUS_STYLES[project.status]}`}
-        >
-          {STATUS_LABELS[project.status]}
-        </span>
+      <div className="flex items-start justify-between gap-3 border-b border-ink/10 pb-2.5">
+        <h4 className="font-display text-lg leading-tight font-semibold tracking-tight text-ink transition-colors group-hover:text-accent">
+          {project.title}
+        </h4>
+        <StatusBadge status={project.status} />
       </div>
-
-      <h4 className="font-display text-[17px] leading-tight font-semibold tracking-tight text-ink">
-        {project.title}
-      </h4>
-      <p className="text-[12.5px] leading-relaxed text-ink/62">{project.about}</p>
-
-      {project.tags.length > 0 && (
-        <ul className="flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
-            <li
-              key={tag}
-              className="border border-ink/10 bg-paper-deep/45 px-1.5 py-0.5 font-mono text-[10px] tracking-[0.03em] text-ink/68"
-            >
-              {tag}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="mt-auto flex items-center justify-between gap-2.5 pt-1.5">
+      <p className="mt-2.5 text-[12.5px] leading-relaxed text-ink/62">
+        {project.about}
+      </p>
+      <div className="mt-3">
+        <Tags tags={project.tags} />
+      </div>
+      <div className="mt-auto flex items-center justify-between gap-2.5 border-t border-ink/10 pt-2.5">
         <span className="font-mono text-[10px] tracking-[0.08em] text-ink/42">
-          {project.year}
+          {String(index + 1).padStart(2, "0")} · {project.year}
         </span>
-        <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.1em] text-ink/50 uppercase transition-colors group-hover:text-accent">
-          Open project
-          <ArrowIcon />
-        </span>
+        <ArrowIcon className="size-3.5 text-ink/50 transition-all group-hover:translate-x-1 group-hover:text-accent" />
       </div>
     </Link>
   );
@@ -161,10 +201,17 @@ export function ProjectGroupDialog({
             </span>
           </div>
 
-          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-            {group.projects.map((project, i) => (
-              <ProjectPanel key={project.slug} project={project} index={i} />
-            ))}
+          <div className="flex flex-col gap-4">
+            {group.projects[0] && (
+              <FeaturedProject project={group.projects[0]} />
+            )}
+            {group.projects.length > 1 && (
+              <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+                {group.projects.slice(1).map((project, i) => (
+                  <ProjectPanel key={project.slug} project={project} index={i + 1} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

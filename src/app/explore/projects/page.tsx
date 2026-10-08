@@ -57,17 +57,7 @@ async function ExploreContent({
             </div>
           </>
         ) : (
-          <>
-            <p className="mt-10 font-mono text-xs tracking-[0.2em] text-accent uppercase">
-              Explore
-            </p>
-            <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-ink sm:text-5xl">
-              All explore groups
-            </h1>
-            <p className="mt-3 max-w-xl text-lg leading-8 text-ink/65">
-              This space is coming together — check back soon.
-            </p>
-          </>
+          <div aria-hidden="true" />
         )}
       </div>
     </>

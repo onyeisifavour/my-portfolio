@@ -19,10 +19,11 @@ export function ProjectGroupGallery({ groups }: { groups: ProjectGroup[] }) {
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2">
-        {groups.map((group) => (
+        {groups.map((group, i) => (
           <ProjectGroupCard
             key={group.id}
             group={group}
+            index={i}
             onSelect={(selected) => setActiveGroup(selected)}
           />
         ))}

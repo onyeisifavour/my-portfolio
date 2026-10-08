@@ -41,9 +41,11 @@ function Cell({
 
 export function ProjectGroupCard({
   group,
+  index,
   onSelect,
 }: {
   group: ProjectGroup;
+  index: number;
   onSelect: (group: ProjectGroup) => void;
 }) {
   const preview = group.projects.slice(0, 4);
@@ -60,11 +62,27 @@ export function ProjectGroupCard({
           onSelect(group);
         }
       }}
-      className="group relative grid cursor-pointer grid-cols-2 border border-ink/10 bg-paper/40 outline-none transition-colors hover:border-accent/45 focus-visible:border-accent/45"
+      className="group relative flex cursor-pointer flex-col border border-ink/10 bg-paper/40 outline-none transition-colors hover:border-accent/45 focus-visible:border-accent/45"
     >
-      {preview.map((project, i) => (
-        <Cell key={project.slug} project={project} cellClass={CELL_CLASSES[i]} />
-      ))}
+      <header className="flex items-baseline justify-between gap-3 border-b border-ink/10 px-3.5 py-2.5">
+        <div className="flex min-w-0 items-baseline gap-2.5">
+          <span className="font-mono text-[10px] tracking-[0.12em] text-accent">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="truncate font-display text-[15px] leading-tight font-semibold tracking-tight text-ink">
+            {group.title}
+          </h3>
+        </div>
+        <span className="shrink-0 font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
+          {group.projects.length}
+        </span>
+      </header>
+
+      <div className="grid grid-cols-2">
+        {preview.map((project, i) => (
+          <Cell key={project.slug} project={project} cellClass={CELL_CLASSES[i]} />
+        ))}
+      </div>
 
       <div
         aria-hidden="true"
