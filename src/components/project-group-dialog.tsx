@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { GroupProject, ProjectGroup } from "@/lib/project-groups";
 
@@ -129,6 +129,9 @@ export function ProjectGroupDialog({
   onClose: () => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const [showSearch, setShowSearch] = useState(false);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     if (!group) return;
@@ -142,13 +145,29 @@ export function ProjectGroupDialog({
   useEffect(() => {
     if (!group) return;
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key !== "Escape") return;
+      if (showSearch) {
+        setShowSearch(false);
+        setFilter("");
+      } else {
+        onClose();
+      }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [group, onClose]);
+  }, [group, onClose, showSearch]);
 
   if (!group) return null;
+
+  const query = filter.trim().toLowerCase();
+  const projects = query
+    ? group.projects.filter((project) =>
+        [project.title, project.about, ...project.tags]
+          .join(" ")
+          .toLowerCase()
+          .includes(query),
+      )
+    : group.projects;
 
   return (
     <div
@@ -168,8 +187,38 @@ export function ProjectGroupDialog({
           >
             {group.title}
           </h2>
-          <button
-            ref={closeRef}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const opening = !showSearch;
+                setShowSearch(opening);
+                if (opening) {
+                  requestAnimationFrame(() => searchRef.current?.focus());
+                } else {
+                  setFilter("");
+                }
+              }}
+              aria-label="Search within this group"
+              aria-expanded={showSearch}
+              className="grid size-7.5 place-items-center border border-ink/10 text-ink transition-colors hover:border-accent/55 hover:bg-accent-soft/40 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="size-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+            <button
+              ref={closeRef}
             type="button"
             onClick={onClose}
             aria-label="Close project group"
@@ -187,8 +236,23 @@ export function ProjectGroupDialog({
             >
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
-          </button>
+            </button>
+          </div>
         </header>
+
+        {showSearch && (
+          <div className="shrink-0 border-b border-ink/10 px-4 py-2.5">
+            <input
+              ref={searchRef}
+              type="text"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Filter projects by name, tag, or keyword"
+              aria-label="Filter projects"
+              className="w-full bg-transparent font-mono text-xs text-ink placeholder:text-ink/35 focus:outline-none"
+            />
+          </div>
+        )}
 
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 pb-7">
           <div className="mb-4 flex items-baseline justify-between gap-4 border-b border-ink/10 pb-3.5">
@@ -196,23 +260,34 @@ export function ProjectGroupDialog({
               <p className="text-[13px] leading-normal text-ink/60">{group.summary}</p>
             )}
             <span className="shrink-0 font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
+              {query ? `${projects.length} of ` : ""}
               {group.projects.length}{" "}
               {group.projects.length === 1 ? "project" : "projects"}
             </span>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {group.projects[0] && (
-              <FeaturedProject project={group.projects[0]} />
-            )}
-            {group.projects.length > 1 && (
-              <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-                {group.projects.slice(1).map((project, i) => (
-                  <ProjectPanel key={project.slug} project={project} index={i + 1} />
-                ))}
-              </div>
-            )}
-          </div>
+          {projects.length === 0 && (
+            <p className="border-y border-ink/10 py-8 text-center text-ink/55">
+              No projects match &quot;{filter.trim()}&quot;.
+            </p>
+          )}
+
+          {projects.length > 0 && (
+            <div className="flex flex-col gap-4">
+              {projects[0] && <FeaturedProject project={projects[0]} />}
+              {projects.length > 1 && (
+                <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+                  {projects.slice(1).map((project, i) => (
+                    <ProjectPanel
+                      key={project.slug}
+                      project={project}
+                      index={i + 1}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SocialLinks } from "@/components/social-links";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SearchButton } from "@/components/search";
 import { site } from "@/lib/site";
 
 const nav = [
@@ -34,6 +35,7 @@ export function Header() {
 
           <div className="mx-1 hidden h-4 w-px bg-ink/12 sm:mx-0 sm:block" aria-hidden="true" />
 
+          <SearchButton />
           <SocialLinks />
           <ThemeToggle />
         </div>

@@ -5,8 +5,16 @@ import type { ProjectGroup } from "@/lib/project-groups";
 import { ProjectGroupCard } from "@/components/project-group-card";
 import { ProjectGroupDialog } from "@/components/project-group-dialog";
 
-export function ProjectGroupGallery({ groups }: { groups: ProjectGroup[] }) {
-  const [activeGroup, setActiveGroup] = useState<ProjectGroup | null>(null);
+export function ProjectGroupGallery({
+  groups,
+  openGroupId,
+}: {
+  groups: ProjectGroup[];
+  openGroupId?: string;
+}) {
+  const [activeGroup, setActiveGroup] = useState<ProjectGroup | null>(
+    () => groups.find((group) => group.id === openGroupId) ?? null,
+  );
 
   if (groups.length === 0) {
     return (
@@ -29,6 +37,7 @@ export function ProjectGroupGallery({ groups }: { groups: ProjectGroup[] }) {
         ))}
       </div>
       <ProjectGroupDialog
+        key={activeGroup?.id ?? "closed"}
         group={activeGroup}
         onClose={() => setActiveGroup(null)}
       />

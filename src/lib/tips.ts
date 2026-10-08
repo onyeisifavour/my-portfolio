@@ -3,11 +3,10 @@ export type TipGroup = {
   tips: string[];
 };
 
-export type LabeledTip = {
-  label: string;
-  tip: string;
-};
-
+/**
+ * Existing tips for the project context. Kept grouped as authored; the
+ * rotation pool below flattens them so the splash cycles through every tip.
+ */
 export const projectTipGroups: TipGroup[] = [
   {
     label: "Check out my latest cool builds",
@@ -41,19 +40,19 @@ export const projectTipGroups: TipGroup[] = [
   },
 ];
 
-export const blogTipGroups: TipGroup[] = [
-  { label: "no text", tips: [] },
-  { label: "no text", tips: [] },
-  { label: "no text", tips: [] },
-];
+/** Flat rotation pool for project-context loading screens. */
+export const projectTipPool: string[] = projectTipGroups.flatMap(
+  (group) => group.tips,
+);
 
-function randomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
+/**
+ * Blog-context tips. Intentionally empty for now — the blog work is deferred.
+ * Fill this array later and the loading screen will start rotating them.
+ */
+export const blogTipPool: string[] = [];
 
-export function pickLabeledTip(groups: TipGroup[]): LabeledTip | null {
-  if (groups.length === 0) return null;
-  const group = groups[randomInt(groups.length)];
-  if (group.tips.length === 0) return null;
-  return { label: group.label, tip: group.tips[randomInt(group.tips.length)] };
+/** Sequential stepper over a pool; returns null when the pool is empty. */
+export function nextTip(pool: string[], index: number): string | null {
+  if (pool.length === 0) return null;
+  return pool[index % pool.length];
 }
