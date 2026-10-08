@@ -197,3 +197,212 @@ html.dark {
     animation: none;
   }
 }
+
+/* ---------- logo loader ---------- */
+.logo-loader {
+  width: min(28vmin, 150px);
+  height: auto;
+  overflow: visible;
+  color: var(--ink);
+  filter:
+    drop-shadow(0 0 4px color-mix(in oklab, var(--ink) 30%, transparent))
+    drop-shadow(0 0 14px color-mix(in oklab, var(--ink) 12%, transparent));
+  animation: loader-breathe 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+#hex,
+#spine,
+#ray-ul,
+#ray-ur,
+#ray-lr,
+#ray-ll {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+#hex {
+  animation: loader-draw-hex 6s infinite;
+}
+
+#spine {
+  animation: loader-draw-spine 6s infinite;
+}
+
+#ray-ul {
+  animation: loader-draw-ray 6s infinite;
+}
+
+#ray-ur {
+  animation: loader-draw-ray 6s infinite;
+  animation-delay: -0.06s;
+}
+
+#ray-lr {
+  animation: loader-draw-ray 6s infinite;
+  animation-delay: -0.12s;
+}
+
+#ray-ll {
+  animation: loader-draw-ray 6s infinite;
+  animation-delay: -0.18s;
+}
+
+#node {
+  fill: currentColor;
+  stroke: none;
+  r: 0;
+  opacity: 0;
+  animation: loader-node-pop 6s linear infinite;
+}
+
+@keyframes loader-draw-hex {
+  0% {
+    stroke-dashoffset: 100;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  30% {
+    stroke-dashoffset: 0;
+    animation-timing-function: linear;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes loader-draw-spine {
+  0% {
+    stroke-dashoffset: 100;
+    animation-timing-function: linear;
+  }
+  24% {
+    stroke-dashoffset: 100;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  42% {
+    stroke-dashoffset: 0;
+    animation-timing-function: linear;
+  }
+  76% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  92% {
+    stroke-dashoffset: -100;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes loader-draw-ray {
+  0% {
+    stroke-dashoffset: 100;
+    animation-timing-function: linear;
+  }
+  38% {
+    stroke-dashoffset: 100;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  58% {
+    stroke-dashoffset: 0;
+    animation-timing-function: linear;
+  }
+  74% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  90% {
+    stroke-dashoffset: -100;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes loader-node-pop {
+  0%,
+  50% {
+    r: 0;
+    opacity: 0;
+  }
+  54% {
+    r: 0;
+    opacity: 1;
+  }
+  62% {
+    r: 7;
+    opacity: 1;
+  }
+  70% {
+    r: 4.5;
+    opacity: 1;
+  }
+  74%,
+  100% {
+    r: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes loader-breathe {
+  0%,
+  55% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.035);
+  }
+  85%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-loader,
+  .logo-loader * {
+    animation: none !important;
+  }
+
+  #hex,
+  #spine,
+  #ray-ul,
+  #ray-ur,
+  #ray-lr,
+  #ray-ll {
+    stroke-dashoffset: 0;
+  }
+
+  #node {
+    r: 6;
+    opacity: 1;
+  }
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--ink) 30%, transparent);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--ink) 50%, transparent);
+}
+
+.scrollbar-color {
+  scrollbar-color: var(--paper) var(--ink);
+}
