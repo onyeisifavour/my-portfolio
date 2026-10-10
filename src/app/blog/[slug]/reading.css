@@ -15,7 +15,8 @@
   --soft: color-mix(in oklab, var(--ink) 4%, transparent);
   --line: color-mix(in oklab, var(--ink) 12%, transparent);
   --line-dark: color-mix(in oklab, var(--ink) 32%, transparent);
-  --page-width: 1240px;
+  /* Matches the site container: max-w-5xl (1024px) content box minus sm:px-8 (32px). */
+  --page-width: 960px;
   --mono: var(--font-mono);
   --sans: var(--font-body);
   --display: var(--font-display);
@@ -35,7 +36,7 @@
 }
 
 .reading-page .article-shell {
-  width: min(calc(100% - 72px), var(--page-width));
+  width: min(calc(100% - 64px), var(--page-width));
   margin: 0 auto;
 }
 /* BACK BUTTON — placeholder styling, customise with your site's design */
@@ -232,7 +233,7 @@
 .reading-page .article-aside {
   align-self: start;
   position: sticky;
-  top: 24px;
+  top: calc(var(--site-header-h) + 24px);
 }
 .reading-page .aside-block {
   display: flex;
