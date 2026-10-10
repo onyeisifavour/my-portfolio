@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { ContentTabs } from "@/components/content-tabs";
 import { Hero } from "@/components/hero";
 import { getAllPosts } from "@/lib/posts";
-import { projects } from "@/lib/projects";
 
 export default async function Home() {
   const posts = await getAllPosts();
@@ -18,7 +17,7 @@ export default async function Home() {
             </div>
           }
         >
-          <ContentTabs projects={projects} posts={posts} />
+          <ContentTabs posts={posts} />
         </Suspense>
       </div>
     </main>
