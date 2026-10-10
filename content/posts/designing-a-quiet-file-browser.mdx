@@ -1,0 +1,23 @@
+---
+title: "Designing a quiet file browser"
+description: "Notes on keeping a navigation-heavy tool calm — hairlines, whitespace, and why every border says something."
+date: "2026-03-12"
+tags: [Craft, Design, Tailwind]
+author: "Onyeisi Favour"
+category: "Code"
+group: "Devlog"
+---
+
+A file browser has one job: show people what is here and let them move it around. The harder part is keeping that calm when there are hundreds of nodes on screen.
+
+**Start with the shortest plausible hierarchy.** Every folder level you add is a decision the user must make. If a tree can be flattened, flatten it. If a tab can be a filter, make it a filter.
+
+## Hairlines do the walking
+
+The lines between rows carry more information than they appear to. A hairline at 10% ink reads as *structure*; at 30% it turns into *objects*. We kept every separator at `10%` and let indentation, not color, carry depth.
+
+Whitespace is the same trick in reverse. The empty band between the sidebar and the listing isn't decoration — it's where the eye learns which pane it is looking at.
+
+## Why every border says something
+
+Once every border is a hairline, anything thicker becomes a signal. Errors, selection, drag targets. That is the whole point of being quiet everywhere else: the loud parts stay loud.

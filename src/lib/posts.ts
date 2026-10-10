@@ -14,6 +14,9 @@ export type PostFrontmatter = {
   description: string;
   date: string;
   tags: string[];
+  author?: string;
+  category?: string;
+  group?: string;
 };
 
 export type PostMeta = PostFrontmatter & {
@@ -39,6 +42,9 @@ function normalizeFrontmatter(
     description: String(data.description ?? ""),
     date: String(data.date ?? ""),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+    author: data.author ? String(data.author) : "",
+    category: data.category ? String(data.category) : "",
+    group: data.group ? String(data.group) : "",
   };
 }
 
@@ -170,6 +176,9 @@ export async function getCompiledPost(
     description: post.description,
     date: post.date,
     tags: post.tags,
+    author: post.author,
+    category: post.category,
+    group: post.group,
     readingTime: post.readingTime,
     content,
   };

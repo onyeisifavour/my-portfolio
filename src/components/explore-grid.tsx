@@ -6,7 +6,7 @@ export function ExploreGrid({ pages }: { pages: ExplorePage[] }) {
   const cards = pages.filter((page) => landingExplorePages.includes(page.id));
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid gap-4 border-y border-ink/10 py-6 sm:grid-cols-2">
       {cards.map((page) => (
         <ExploreCard key={page.id} page={page} />
       ))}

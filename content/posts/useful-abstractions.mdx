@@ -1,0 +1,23 @@
+---
+title: "Useful abstractions vs buildings"
+description: "When a layer of indirection pays for itself and when it is just delaying the thing it tries to hide."
+date: "2026-02-28"
+tags: [Next.js, TypeScript]
+author: "Onyeisi Favour"
+category: "Design"
+group: "Study"
+---
+
+Every abstraction is a promise that the thing it hides is uglier than the hole it leaves behind. Some keep that promise. Some just kick the complexity sideways.
+
+**The test I use: can I delete the boundary in an afternoon?** Leaky abstractions usually fail here — they couple to call sites, to config, to the shape of the data.
+
+## Boundaries that earn their keep
+
+- They shrink the vocabulary of the calling code.
+- They concentrate the change in one place.
+- You can point at the moment they paid for themselves.
+
+## The building problem
+
+A library is a building: it has rooms, load-bearing walls, and a footprint you cannot dig out from under. Keep dependencies at the edges. A dependency high in the tree is a building; a dependency at the leaves is a tool.

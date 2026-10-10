@@ -1,0 +1,1044 @@
+/*
+ * Blog reading page — ported 1:1 from rough-drafts/blog-reading-page/styles.css.
+ * Only the colour scheme and fonts are mapped to the site's tokens; all spacing,
+ * values, media queries and structure are kept identical to the draft.
+ * Everything is scoped under .reading-page so it cannot leak into the rest of the site.
+ */
+
+:root {
+  /* Sticky site header height — used to seat the mobile read-strip below the header. */
+  --site-header-h: 64px;
+}
+
+.reading-page {
+  --muted: color-mix(in oklab, var(--ink) 55%, transparent);
+  --soft: color-mix(in oklab, var(--ink) 4%, transparent);
+  --line: color-mix(in oklab, var(--ink) 12%, transparent);
+  --line-dark: color-mix(in oklab, var(--ink) 32%, transparent);
+  --page-width: 1240px;
+  --mono: var(--font-mono);
+  --sans: var(--font-body);
+  --display: var(--font-display);
+}
+
+.reading-page .skip-link {
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  z-index: 60;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.reading-page .skip-link:focus {
+  top: 15px;
+}
+
+.reading-page .article-shell {
+  width: min(calc(100% - 72px), var(--page-width));
+  margin: 0 auto;
+}
+/* BACK BUTTON — placeholder styling, customise with your site's design */
+.reading-page .back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 33px;
+  padding: 9px 13px;
+  border: 1px solid var(--line-dark);
+  color: var(--ink);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.reading-page .back-button:focus-visible {
+  border-color: var(--ink);
+  color: var(--accent);
+}
+.reading-page .article-header {
+  padding-top: 47px;
+}
+.reading-page .header-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 19px;
+}
+.reading-page .category {
+  margin: 0;
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.reading-page .category span {
+  padding: 0 6px;
+  color: color-mix(in oklab, var(--ink) 35%, transparent);
+}
+/* TOC MENU BUTTON — header entry to the contents page; shown ≤760px only (desktop uses the aside) */
+.reading-page .toc-menu-btn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-dark);
+  background: none;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.reading-page .toc-menu-btn::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.reading-page .toc-menu-btn:focus-visible {
+  border-color: var(--ink);
+  color: var(--accent);
+}
+.reading-page h1,
+.reading-page h2,
+.reading-page p {
+  margin-top: 0;
+}
+.reading-page h1 {
+  max-width: 970px;
+  margin-bottom: 22px;
+  font-family: var(--display);
+  font-size: clamp(43px, 6.15vw, 82px);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.99;
+}
+.reading-page h1 em {
+  font-style: normal;
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
+}
+.reading-page .dek {
+  max-width: 655px;
+  margin-bottom: 34px;
+  color: color-mix(in oklab, var(--ink) 62%, transparent);
+  font-size: clamp(16px, 1.7vw, 19px);
+  line-height: 1.7;
+}
+.reading-page .article-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 35px;
+  padding: 20px 0 22px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.reading-page .author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.reading-page .author-avatar {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid color-mix(in oklab, var(--ink) 22%, transparent);
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 800;
+}
+.reading-page .author > div:last-child,
+.reading-page .meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.reading-page .meta-label {
+  color: color-mix(in oklab, var(--ink) 45%, transparent);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.09em;
+}
+.reading-page .meta-value {
+  font-size: 11px;
+  font-weight: 600;
+}
+/* META STRIP ACTIONS — placeholders, customise with your site's design */
+.reading-page .meta-project {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.reading-page .meta-project .meta-value {
+  transition: color 0.15s ease;
+}
+.reading-page .meta-project:focus-visible .meta-value {
+  color: var(--accent);
+}
+.reading-page .edit-logs-btn {
+  margin: 0 0 0 auto;
+  padding: 11px 15px;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.reading-page .edit-logs-btn:focus-visible {
+  background: var(--accent);
+  color: var(--ink);
+}
+/* Fonts for the mono/label elements (grouped from the draft's shared rule) */
+.reading-page .back-button,
+.reading-page .category,
+.reading-page .meta-label,
+.reading-page .aside-label,
+.reading-page .section-index,
+.reading-page .note-card-label,
+.reading-page .article-tags {
+  font-family: var(--mono);
+}
+
+.reading-page .read-strip {
+  display: none;
+} /* hidden by default — revealed only ≤760px, where it replaces the aside TOC */
+.reading-page .article-grid {
+  display: grid;
+  grid-template-columns: minmax(150px, 205px) minmax(0, 680px);
+  justify-content: space-between;
+  gap: clamp(45px, 8vw, 115px);
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding: 56px 0 90px;
+}
+.reading-page .article-aside {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
+.reading-page .aside-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.reading-page .aside-label {
+  margin-bottom: 16px;
+  color: color-mix(in oklab, var(--ink) 50%, transparent);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+/* TOC TREE — collapsible hierarchical contents (desktop aside + overlay page).
+   A dot before the number toggles a branch: dot → downward caret + nested children. */
+.reading-page .toc-tree {
+  display: block;
+}
+.reading-page .toc-children {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reading-page .toc-children:not(.toc-root) {
+  margin-left: 8px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+}
+.reading-page .toc-item {
+  list-style: none;
+}
+.reading-page .toc-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.reading-page .toc-toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--line-dark);
+  cursor: pointer;
+}
+.reading-page .toc-toggle.is-leaf {
+  cursor: default;
+}
+.reading-page .toc-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.reading-page .toc-toggle:not(.is-leaf):focus-visible .toc-dot {
+  background: var(--accent);
+}
+.reading-page .toc-caret {
+  display: none;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+}
+.reading-page .toc-toggle[aria-expanded="true"] {
+  color: var(--accent);
+}
+.reading-page .toc-toggle[aria-expanded="true"] .toc-dot {
+  display: none;
+}
+.reading-page .toc-toggle[aria-expanded="true"] .toc-caret {
+  display: block;
+}
+.reading-page .toc-link {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 0;
+  color: color-mix(in oklab, var(--ink) 50%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+  transition: color 0.15s ease;
+}
+.reading-page .toc-num {
+  flex: none;
+  color: color-mix(in oklab, var(--ink) 50%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+.reading-page .toc-title {
+  color: color-mix(in oklab, var(--ink) 75%, transparent);
+  font-family: var(--sans);
+  font-size: 11px;
+}
+.reading-page .toc-link:focus-visible,
+.reading-page .toc-link:focus-visible .toc-title {
+  color: var(--accent);
+}
+.reading-page .toc-link.is-active,
+.reading-page .toc-link.is-active .toc-num,
+.reading-page .toc-link.is-active .toc-title {
+  color: var(--accent);
+}
+.reading-page .toc-link.is-active .toc-title {
+  font-weight: 600;
+}
+.reading-page .aside-note {
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  gap: 10px;
+  margin-top: 24px;
+}
+.reading-page .aside-star {
+  color: var(--accent);
+  font-size: 21px;
+  line-height: 1;
+}
+.reading-page .aside-note p {
+  margin: 0;
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.reading-page .article-body {
+  min-width: 0;
+}
+.reading-page .article-body p {
+  margin-bottom: 22px;
+  color: color-mix(in oklab, var(--ink) 82%, transparent);
+  font-size: 15px;
+  line-height: 1.95;
+}
+.reading-page .article-body .opening {
+  color: color-mix(in oklab, var(--ink) 90%, transparent);
+  font-size: 17px;
+  line-height: 1.9;
+}
+.reading-page .dropcap {
+  float: left;
+  margin: 8px 10px 0 0;
+  font-family: var(--display);
+  font-size: 53px;
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+}
+.reading-page .section-rule {
+  width: 100%;
+  height: 1px;
+  margin: 40px 0 34px;
+  border: 0;
+  background: var(--line);
+}
+.reading-page .article-section {
+  margin-bottom: 46px;
+}
+.reading-page .section-index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 13px;
+  color: color-mix(in oklab, var(--ink) 42%, transparent);
+  font-size: 8px;
+  letter-spacing: 0.09em;
+}
+.reading-page .section-index span {
+  color: color-mix(in oklab, var(--ink) 62%, transparent);
+}
+.reading-page .article-section h2 {
+  margin-bottom: 16px;
+  font-family: var(--display);
+  font-size: clamp(27px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+}
+/* SUBSECTIONS — nested under a section; mirrored in the TOC tree */
+.reading-page .article-subsection {
+  margin-top: 30px;
+}
+.reading-page .subsection-index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 11px;
+  color: color-mix(in oklab, var(--ink) 42%, transparent);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.09em;
+}
+.reading-page .subsection-index span {
+  color: color-mix(in oklab, var(--ink) 62%, transparent);
+}
+.reading-page .article-subsection h3 {
+  margin: 0 0 12px;
+  font-family: var(--display);
+  font-size: clamp(19px, 2.1vw, 23px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+.reading-page .article-body blockquote {
+  position: relative;
+  margin: 32px 0 35px;
+  padding: 26px 28px 26px 34px;
+  border-left: 3px solid var(--accent);
+  background: var(--soft);
+}
+.reading-page .quote-mark {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+  color: var(--accent);
+  font-family: Georgia, serif;
+  font-size: 35px;
+  line-height: 1;
+}
+.reading-page .article-body blockquote p {
+  margin: 0;
+  color: color-mix(in oklab, var(--ink) 90%, transparent);
+  font-family: var(--display);
+  font-size: clamp(18px, 2.3vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.55;
+}
+.reading-page .note-card {
+  margin: 30px 0 36px;
+  padding: 22px 24px 18px;
+  border: 1px solid var(--line);
+}
+.reading-page .note-card-label {
+  display: block;
+  margin-bottom: 14px;
+  color: color-mix(in oklab, var(--ink) 48%, transparent);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+.reading-page .note-card ol {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reading-page .note-card li {
+  display: flex;
+  gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+  color: color-mix(in oklab, var(--ink) 82%, transparent);
+  font-size: 12px;
+}
+.reading-page .note-card li span {
+  color: color-mix(in oklab, var(--ink) 45%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+.reading-page .article-end {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  margin-top: 51px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.reading-page .end-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 800;
+}
+/* DESKTOP BACK TO TOP — pinned to the right edge of the article-end strip */
+.reading-page .article-end-top {
+  align-self: center;
+  justify-self: end;
+  white-space: nowrap;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.07em;
+  transition: color 0.15s ease;
+}
+.reading-page .article-end-top span {
+  padding-left: 7px;
+  font-size: 12px;
+}
+.reading-page .article-body .end-title {
+  margin: 1px 0 5px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.reading-page .article-body .end-copy {
+  margin: 0;
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.reading-page .article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 22px;
+}
+.reading-page .article-tags span {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  color: color-mix(in oklab, var(--ink) 60%, transparent);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* OVERLAYS — placeholder dialog styles, customise with your site's design */
+.reading-page .overlay {
+  width: min(560px, calc(100% - 40px));
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.reading-page .overlay::backdrop {
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.reading-page .overlay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.reading-page .overlay-title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.reading-page .overlay-close {
+  padding: 6px 10px;
+  border: 1px solid var(--line-dark);
+  background: none;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.reading-page .overlay-close:focus-visible {
+  background: var(--soft);
+}
+.reading-page .overlay p {
+  margin: 0;
+  color: color-mix(in oklab, var(--ink) 82%, transparent);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Locks the page behind an open dialog (the mobile contents page covers everything). */
+body.has-overlay {
+  overflow: hidden;
+}
+
+/* TOC PAGE + STRIP OVERLAY — soft placeholder styling, customise with your site's design */
+.reading-page .toc-page {
+  max-height: min(80vh, 660px);
+  overflow-y: auto;
+}
+.reading-page .toc-page .toc-tree {
+  margin-top: 4px;
+}
+@keyframes toc-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+.reading-page .strip-overlay {
+  width: min(520px, calc(100% - 40px));
+  border: 0;
+  border-radius: 16px;
+  background: var(--soft);
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.reading-page .strip-overlay::backdrop {
+  background: color-mix(in srgb, var(--ink) 32%, transparent);
+}
+.reading-page .strip-overlay .overlay-title {
+  color: color-mix(in oklab, var(--ink) 45%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.reading-page .strip-overlay .overlay-close {
+  border: 0;
+  background: none;
+  color: color-mix(in oklab, var(--ink) 45%, transparent);
+}
+.reading-page .strip-overlay-text {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+}
+
+/* FLOATING DOT — ≤760px; a small pulsing dot that reveals a glass action box */
+.reading-page .fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.reading-page .fab-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 156px;
+  padding: 5px;
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--ink) 16%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s;
+}
+.reading-page .fab.is-open .fab-actions {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+.reading-page .fab-action {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 13px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.reading-page .fab-action + .fab-action {
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 10px 10px;
+}
+.reading-page .fab-action:focus-visible {
+  color: var(--accent);
+}
+.reading-page .fab-action-icon {
+  flex: none;
+  width: 14px;
+  color: var(--accent);
+  font-size: 12px;
+  text-align: center;
+}
+.reading-page .fab-main {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--paper) 16%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 70%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--ink) 22%, transparent);
+  cursor: pointer;
+}
+.reading-page .fab-main:focus-visible {
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+}
+.reading-page .fab-main::before,
+.reading-page .fab-main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  pointer-events: none;
+  animation: fab-pulse 2.6s ease-out infinite;
+}
+.reading-page .fab-main::after {
+  animation-delay: 1.3s;
+}
+@keyframes fab-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.reading-page .fab-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.2s ease;
+}
+.reading-page .fab.is-open .fab-dot {
+  transform: scale(1.4);
+}
+.reading-page .fab.is-open .fab-main::before,
+.reading-page .fab.is-open .fab-main::after {
+  animation: none;
+}
+
+/* Scroll offset so anchored sections clear the sticky site header. */
+.reading-page .article-section,
+.reading-page .article-subsection {
+  scroll-margin-top: calc(var(--site-header-h) + 16px);
+}
+
+@media (min-width: 1500px) {
+  .reading-page .article-grid {
+    grid-template-columns: 205px 680px;
+  }
+}
+@media (max-width: 760px) {
+  .reading-page .article-shell {
+    width: min(calc(100% - 40px), var(--page-width));
+  }
+  .reading-page .back-button {
+    margin-top: 26px;
+    font-size: 8px;
+  }
+  .reading-page .article-header {
+    padding-top: 37px;
+  }
+  .reading-page h1 {
+    font-size: clamp(42px, 9vw, 68px);
+  }
+  .reading-page .dek {
+    font-size: 15px;
+  }
+  .reading-page .article-meta {
+    gap: 18px 25px;
+  }
+  .reading-page .article-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding-top: 24px;
+    padding-bottom: 60px;
+  }
+  .reading-page .article-aside {
+    position: static;
+    order: 2;
+  }
+  .reading-page .article-body {
+    order: 1;
+  }
+  .reading-page .aside-block {
+    display: none;
+  }
+  .reading-page .aside-note {
+    max-width: 340px;
+    margin-top: 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  /* READ-POSITION STRIP — sticky top bar; the small-screen stand-in for the hidden aside TOC.
+     visibility (not display) keeps its space reserved so nothing jumps when it appears. */
+  .reading-page .read-strip {
+    position: sticky;
+    top: var(--site-header-h);
+    z-index: 5;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px 14px;
+    border: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-align: left;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .reading-page .read-strip.is-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+  .reading-page .read-strip-label {
+    flex: none;
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
+  }
+  .reading-page .read-strip-current {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--accent);
+  }
+  .reading-page .read-strip-cue {
+    flex: none;
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
+    font-size: 12px;
+  }
+  .reading-page .read-strip:focus-visible .read-strip-cue {
+    color: var(--accent);
+  }
+  .reading-page .article-body p {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .reading-page .article-body .opening {
+    font-size: 16px;
+  }
+  /* SECTION CLEARANCE — top padding absorbs the sticky strip's overlap so a section or
+     subsection heading (eyebrow + h2/h3) is never hidden under the bar as it scrolls to
+     the top. The old bottom margin is folded into this padding to keep the rhythm. */
+  .reading-page .article-section,
+  .reading-page .article-subsection {
+    padding-top: 48px;
+    margin-bottom: 0;
+  }
+  .reading-page .article-subsection {
+    margin-top: 0;
+  }
+  /* Small-screen controls */
+  .reading-page .toc-menu-btn {
+    display: inline-flex;
+  }
+  .reading-page .fab {
+    display: flex;
+  }
+  .reading-page .article-end-top {
+    display: none;
+  } /* back-to-top now lives in the floating dot */
+  /* CONTENTS PAGE (mobile) — a full-screen page that covers the whole viewport,
+     header included, like a hamburger menu sliding in from the right. */
+  .reading-page .toc-page {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: var(--paper);
+    overflow-y: auto;
+    animation: toc-in 0.26s ease both;
+  }
+  .reading-page .toc-page::backdrop {
+    background: transparent;
+  }
+  .reading-page .toc-page .overlay-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin-bottom: 0;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .reading-page .toc-page .toc-tree {
+    margin-top: 0;
+    padding: 8px 20px 48px;
+  }
+}
+@media (max-width: 430px) {
+  .reading-page .article-shell {
+    width: calc(100% - 32px);
+  }
+  .reading-page .back-button {
+    margin-top: 22px;
+    font-size: 7px;
+  }
+  .reading-page .article-header {
+    padding-top: 31px;
+  }
+  .reading-page h1 {
+    font-size: clamp(38px, 11vw, 48px);
+    letter-spacing: -0.07em;
+  }
+  .reading-page .category {
+    font-size: 8px;
+  }
+  .reading-page .article-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .reading-page .author {
+    grid-column: 1 / -1;
+  }
+  .reading-page .edit-logs-btn {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    text-align: center;
+  }
+  .reading-page .meta-value {
+    font-size: 10px;
+  }
+  .reading-page .article-body blockquote {
+    padding: 24px 19px 23px 27px;
+  }
+  .reading-page .article-body blockquote p {
+    font-size: 18px;
+  }
+  .reading-page .note-card {
+    padding: 18px 16px 14px;
+  }
+}
+/* HOVER EFFECTS — pointer devices only, so a tap on touch never leaves a sticky state. */
+@media (hover: hover) {
+  .reading-page .back-button:hover {
+    border-color: var(--ink);
+    color: var(--accent);
+  }
+  .reading-page .toc-menu-btn:hover {
+    border-color: var(--ink);
+    color: var(--accent);
+  }
+  .reading-page .meta-project:hover .meta-value {
+    color: var(--accent);
+  }
+  .reading-page .edit-logs-btn:hover {
+    background: var(--accent);
+    color: var(--ink);
+  }
+  .reading-page .toc-toggle:not(.is-leaf):hover .toc-dot {
+    background: var(--accent);
+  }
+  .reading-page .article-end-top:hover {
+    color: var(--accent);
+  }
+  .reading-page .overlay-close:hover {
+    background: var(--soft);
+  }
+  .reading-page .fab-action:hover {
+    color: var(--accent);
+  }
+  .reading-page .fab-main:hover {
+    background: color-mix(in srgb, var(--ink) 82%, transparent);
+  }
+  .reading-page .read-strip:hover .read-strip-cue {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-page *,
+  .reading-page *::before,
+  .reading-page *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

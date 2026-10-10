@@ -1,0 +1,27 @@
+---
+title: "Shipping freckle by freckle"
+description: "A post-mortem on breaking a month-long rewrite into small enough steps that nothing went quiet for too long."
+date: "2026-02-09"
+tags: [Rust, CLI, Process]
+author: "Onyeisi Favour"
+category: "Rust"
+group: "CLI"
+---
+
+A rewrite is a long silence with a big payout at the end. The silence is the problem: no feedback, no milestone that feels real, nobody to tell you it still matters.
+
+This time I promised myself every step would ship. Not a branch — a release.
+
+## The smallest shippable slice
+
+Each feature was cut until it was barely a feature. The first release of the new CLI did exactly one thing: read a config file and print it back. That shipped on day three.
+
+After that, every week had a cadence: pick the next ugly spot, make it small, ship it.
+
+## What broke
+
+- I cut a test suite *and* rewrote the parser in the same slice. Two rewrites in one step is one rewrite too many.
+- A "small" step that touched the public API took three days of churn. Small on the inside is not the same as small on the outside.
+- Not shipping when a step was 60% there cost more than the 40% ever saved.
+
+It is slower until it is faster. The boring parts carried the project; the flashy parts mostly got in the way.

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import type { PostMeta } from "@/lib/posts";
-import { BlogList } from "@/components/blog-list";
+import { BlogCard } from "@/components/blog-card";
 import { ExploreGrid } from "@/components/explore-grid";
 import { LatestBlogCard, LatestProjectCard } from "@/components/latest-card";
 import { explorePages } from "@/lib/project-groups";
@@ -101,7 +101,21 @@ export function ContentTabs({ posts }: { posts: PostMeta[] }) {
         ) : (
           <div className="flex flex-col gap-8">
             <LatestBlogCard />
-            <BlogList posts={posts} />
+            {posts.length > 0 ? (
+              <div className="grid gap-4 border-y border-ink/10 py-6 sm:grid-cols-2">
+                {posts.map((post) => (
+                  <BlogCard key={post.slug} post={post} />
+                ))}
+              </div>
+            ) : (
+              <p className="border-y border-ink/10 py-10 text-ink/60">
+                No posts yet. Drop a Markdown or MDX file into{" "}
+                <code className="rounded bg-ink/6 px-1.5 py-0.5 font-mono text-sm">
+                  content/posts
+                </code>
+                .
+              </p>
+            )}
           </div>
         )}
       </div>
