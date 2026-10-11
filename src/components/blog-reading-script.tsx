@@ -246,10 +246,11 @@ export function BlogReadingScript({ slug }: { slug: string }) {
 
     /* 6. Delegated interaction.
           - Desktop aside: dot toggles a branch; text navigates.
-          - Mobile contents page: one click/tap on text OR dot expands/collapses;
-            two clicks/taps in quick succession navigate to the section. Leaf links always navigate.
-          A manual timer (not the native dblclick event) detects the second click so the
-          behavior also works for touch taps and slower double-clicks. */
+          - Mobile contents page: one click/tap on text OR dot expands/collapses a branch;
+            a second click/tap in quick succession navigates to the section. Leaves also
+            require the two clicks/taps (the first only arms the timer), so every row behaves
+            the same. A manual timer (not the native dblclick event) detects the second click
+            so the behavior also works for touch taps and slower double-clicks. */
     let tocNavTimer: ReturnType<typeof setTimeout> | null = null;
     on(document, "click", (event) => {
       const e = event as MouseEvent;
@@ -268,12 +269,15 @@ export function BlogReadingScript({ slug }: { slug: string }) {
       const inContentsPage = Boolean(link.closest(".toc-page"));
       const dialog = link.closest("dialog");
 
-      if (!inContentsPage || !hasKids) {
-        /* Desktop aside, or a leaf: a single click navigates. */
+      if (!inContentsPage) {
+        /* Desktop aside: a single click navigates. */
         closeAndUnlock(dialog);
         return;
       }
 
+      /* Mobile contents page: every item needs a double click/tap to navigate, leaves
+         included, so all rows behave the same. The first click expands a branch (a leaf
+         has nothing to expand, so it only arms the timer); the second navigates. */
       e.preventDefault();
       if (tocNavTimer) {
         /* Second click within the window -> navigate. */
@@ -287,7 +291,7 @@ export function BlogReadingScript({ slug }: { slug: string }) {
       tocNavTimer = setTimeout(() => {
         tocNavTimer = null;
         const t = item ? item.querySelector(":scope > .toc-row > .toc-toggle") : null;
-        if (t) toggleBranch(t);
+        if (t && hasKids) toggleBranch(t);
       }, 260);
     });
 
