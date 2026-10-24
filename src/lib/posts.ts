@@ -183,3 +183,44 @@ export async function getCompiledPost(
     content,
   };
 }
+
+
+export type BlogGroup = {
+  id: string;
+  category: string;
+  group: string;
+  posts: PostMeta[];
+};
+
+export async function getBlogGroups(): Promise<BlogGroup[]> {
+  const posts = await getAllPosts();
+  const map = new Map<string, BlogGroup>();
+
+  for (const post of posts) {
+    const category = post.category || "General";
+    const group = post.group || "Notes";
+    const key = `${category}::${group}`;
+
+    if (!map.has(key)) {
+      map.set(key, {
+        id: key,
+        category,
+        group,
+        posts: [],
+      });
+    }
+    map.get(key)!.posts.push(post);
+  }
+
+  return Array.from(map.values()).sort((a, b) => {
+    if (a.category !== b.category) {
+      return a.category.localeCompare(b.category);
+    }
+    return a.group.localeCompare(b.group);
+  });
+}
+
+export async function getBlogGroupById(id: string): Promise<BlogGroup | null> {
+  const groups = await getBlogGroups();
+  return groups.find((group) => group.id === id) ?? null;
+}
