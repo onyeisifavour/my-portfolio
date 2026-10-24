@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ProjectGroupGallery } from "@/components/project-group-gallery";
+import { ExploreAllGroups } from "@/components/explore-all-groups";
 import {
   explorePages,
   projectGroups,
@@ -64,7 +65,7 @@ async function ExploreContent({
           </div>
         </>
       ) : (
-        <div aria-hidden="true" />
+        <ExploreAllGroups openGroupId={openGroupId} />
       )}
     </div>
   );
