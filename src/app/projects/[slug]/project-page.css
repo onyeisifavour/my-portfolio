@@ -831,9 +831,13 @@ html.dark {
   line-height: 1.85;
 }
 
+:root {
+  --project-header-h: 64px;
+}
+
 .project-case-aside {
   position: sticky;
-  top: 28px;
+  top: calc(var(--project-header-h) + 18px);
 }
 
 .project-tags {

@@ -337,7 +337,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
         </div>
       </main>
 
-      {/* OVERLAYS — placeholders; restyle and fill with your site's design */}
+      {/* OVERLAYS — consistent overlay component styles */}
       <dialog
         id="project-overlay"
         className="overlay"

@@ -14,6 +14,19 @@ export function ProjectPageScript() {
       cleanups.push(() => target.removeEventListener(type, handler));
     };
 
+    const setHeaderHeight = () => {
+      const header = document.querySelector(".site-header") as HTMLElement | null;
+      if (!header) return;
+      const h = Math.round(header.getBoundingClientRect().height);
+      if (h > 0) {
+        document.documentElement.style.setProperty("--project-header-h", `${h}px`);
+      }
+    };
+
+    setHeaderHeight();
+    on(window, "resize", setHeaderHeight);
+    on(window, "load", setHeaderHeight);
+
     const toast = document.getElementById("project-toast");
     let toastTimer: ReturnType<typeof setTimeout> | undefined;
 

@@ -564,16 +564,21 @@
   text-transform: uppercase;
 }
 
-/* OVERLAYS — placeholder dialog styles, customise with your site's design */
+/* OVERLAYS — consistent overlay system */
 .reading-page .overlay {
   width: min(560px, calc(100% - 40px));
+  max-height: min(85vh, 720px);
+  overflow-y: auto;
   padding: 28px;
   border: 1px solid var(--line);
   background: var(--paper);
   color: var(--ink);
+  border-radius: 0;
+  box-shadow: 0 40px 80px color-mix(in srgb, var(--ink) 12%, transparent);
 }
 .reading-page .overlay::backdrop {
   background: color-mix(in srgb, var(--ink) 55%, transparent);
+  backdrop-filter: blur(2px);
 }
 .reading-page .overlay-head {
   display: flex;
@@ -598,9 +603,15 @@
   font-size: 10px;
   letter-spacing: 0.08em;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.reading-page .overlay-close:hover {
+  background: var(--soft);
 }
 .reading-page .overlay-close:focus-visible {
   background: var(--soft);
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
 }
 .reading-page .overlay p {
   margin: 0;
@@ -614,7 +625,7 @@ body.has-overlay {
   overflow: hidden;
 }
 
-/* TOC PAGE + STRIP OVERLAY — soft placeholder styling, customise with your site's design */
+/* TOC PAGE + STRIP OVERLAY — consistent overlay variants */
 .reading-page .toc-page {
   max-height: min(80vh, 660px);
   overflow-y: auto;
@@ -632,13 +643,18 @@ body.has-overlay {
 }
 .reading-page .strip-overlay {
   width: min(520px, calc(100% - 40px));
-  border: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
   border-radius: 16px;
-  background: var(--soft);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
   box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 18%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 .reading-page .strip-overlay::backdrop {
   background: color-mix(in srgb, var(--ink) 32%, transparent);
+}
+.reading-page .strip-overlay .overlay-head {
+  margin-bottom: 12px;
 }
 .reading-page .strip-overlay .overlay-title {
   color: color-mix(in oklab, var(--ink) 45%, transparent);
