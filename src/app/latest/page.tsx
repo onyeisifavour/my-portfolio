@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import { getAllProjectsWithGroups } from "@/lib/project-groups";
-import { LatestBlogsFeed, LatestProjectsFeed } from "@/components/latest-feed";
+import { CuratedLatestBlogsFeed, CuratedLatestProjectsFeed } from "@/components/curated-latest-feed";
 
 export const metadata = {
   title: "Latest",
@@ -33,8 +33,7 @@ export default async function LatestPage() {
             Latest builds &amp; notes
           </h1>
           <p className="max-w-xl text-lg leading-8 text-ink/65">
-            Everything grouped by their project/blog groups. Pin groups or items
-            to keep them handy.
+            Grouped by project/blog groups. Pinned items are curated by me and shown first.
           </p>
         </header>
 
@@ -69,7 +68,7 @@ export default async function LatestPage() {
               </Link>
             </header>
             <Suspense fallback={<div className="text-ink/50">Loading…</div>}>
-              <LatestProjectsFeed items={projects} />
+              <CuratedLatestProjectsFeed items={projects} />
             </Suspense>
           </section>
 
@@ -103,7 +102,7 @@ export default async function LatestPage() {
               </Link>
             </header>
             <Suspense fallback={<div className="text-ink/50">Loading…</div>}>
-              <LatestBlogsFeed posts={posts} />
+              <CuratedLatestBlogsFeed posts={posts} />
             </Suspense>
           </section>
         </div>
