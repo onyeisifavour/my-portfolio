@@ -291,3 +291,27 @@ export function getExplorePageForGroup(group: ProjectGroup) {
   }
   return explorePages.find((p) => p.id === group.pages[0]);
 }
+
+
+export function getRecentProjects(limit = 8) {
+  const projects: Array<{ project: GroupProject; group: ProjectGroup }> = [];
+  // Collect all projects with group context
+  for (const group of projectGroups) {
+    for (const project of group.projects) {
+      projects.push({ project, group });
+    }
+  }
+  // Sort by year desc as proxy for recency
+  projects.sort((a, b) => b.project.year.localeCompare(a.project.year));
+  return projects.slice(0, limit);
+}
+
+export function getAllProjectsWithGroups() {
+  const projects: Array<{ project: GroupProject; group: ProjectGroup }> = [];
+  for (const group of projectGroups) {
+    for (const project of group.projects) {
+      projects.push({ project, group });
+    }
+  }
+  return projects;
+}

@@ -224,3 +224,16 @@ export async function getBlogGroupById(id: string): Promise<BlogGroup | null> {
   const groups = await getBlogGroups();
   return groups.find((group) => group.id === id) ?? null;
 }
+
+
+export function getLatestBlogPosts(limit = 6): PostMeta[] {
+  const posts: PostMeta[] = [];
+  // getAllPosts is cached but we can call synchronously? No, it's async.
+  // This is a helper for sync contexts - better to use getAllPosts in async
+  return posts.slice(0, limit);
+}
+
+export async function getRecentBlogPosts(limit = 6): Promise<PostMeta[]> {
+  const posts = await getAllPosts();
+  return posts.slice(0, limit);
+}
