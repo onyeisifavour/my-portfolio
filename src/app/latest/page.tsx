@@ -52,7 +52,7 @@ export default async function LatestPage() {
                 href="/explore/projects"
                 className="group inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
               >
-                Explore all groups
+                Explore Projects groups
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ export default async function LatestPage() {
                 href="/explore/blog"
                 className="group inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
               >
-                View all groups
+                Explore Blog groups
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
