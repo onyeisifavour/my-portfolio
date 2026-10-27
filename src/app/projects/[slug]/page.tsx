@@ -551,19 +551,6 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
             </span>
           </Link>
         </main>
-
-        <footer>
-          <span>© 2026 {site.name}. Built with intention.</span>
-          <div className="project-footer-links">
-            <a href={site.links.github} target="_blank" rel="noreferrer">
-              GitHub ↗
-            </a>
-            <a href={site.links.x} target="_blank" rel="noreferrer">
-              X ↗
-            </a>
-            <a href={site.links.email}>Email ↗</a>
-          </div>
-        </footer>
       </div>
 
       <div className="project-toast" id="project-toast" role="status" aria-live="polite"></div>
