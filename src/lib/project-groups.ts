@@ -261,3 +261,33 @@ export const projectGroups: ProjectGroup[] = [
     ],
   },
 ];
+
+export function getProjectBySlug(slug: string) {
+  for (const group of projectGroups) {
+    const project = group.projects.find((p) => p.slug === slug);
+    if (project) {
+      return { project, group };
+    }
+  }
+  return null;
+}
+
+export function getAllProjectSlugs() {
+  const slugs = new Set<string>();
+  for (const group of projectGroups) {
+    for (const project of group.projects) {
+      slugs.add(project.slug);
+    }
+  }
+  return Array.from(slugs);
+}
+
+export function getExplorePageForGroup(group: ProjectGroup) {
+  // Return the first non-latest page for the group
+  for (const pageId of group.pages) {
+    if (pageId !== "latest") {
+      return explorePages.find((p) => p.id === pageId);
+    }
+  }
+  return explorePages.find((p) => p.id === group.pages[0]);
+}
