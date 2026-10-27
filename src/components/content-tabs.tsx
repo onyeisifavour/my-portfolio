@@ -70,7 +70,7 @@ export function ContentTabs({ posts }: { posts: PostMeta[] }) {
           href={tab === "projects" ? "/explore/projects" : "/explore/blog"}
           className="group inline-flex shrink-0 items-center gap-1.5 pb-3 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
         >
-          {tab === "projects" ? "See all explore groups" : "View blogs"}
+          {tab === "projects" ? "Explore all groups" : "View all groups"}
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
