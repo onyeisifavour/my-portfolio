@@ -19,7 +19,19 @@ export function ExploreAllGroups({
   );
 
   return (
-    <div className="mt-10 flex flex-col gap-12">
+    <div className="flex flex-col gap-12">
+      <header className="mt-10 flex flex-col gap-3">
+        <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+          Projects
+        </p>
+        <h1 className="font-display text-4xl leading-tight tracking-tight text-ink sm:text-5xl">
+          Explore all groups
+        </h1>
+        <p className="max-w-xl text-lg leading-8 text-ink/65">
+          Browse projects grouped by study, creatives, gigs, and products.
+        </p>
+      </header>
+
       {SECTIONS.map((sectionId) => {
         const page = explorePages.find((p) => p.id === sectionId);
         const groups = projectGroups.filter((group) =>

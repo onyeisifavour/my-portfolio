@@ -65,7 +65,9 @@ async function ExploreContent({
           </div>
         </>
       ) : (
-        <ExploreAllGroups openGroupId={openGroupId} />
+        <>
+          <ExploreAllGroups openGroupId={openGroupId} />
+        </>
       )}
     </div>
   );
