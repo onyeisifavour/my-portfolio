@@ -26,6 +26,12 @@ async function ExploreContent({
   const resolved = await searchParams;
   const pageId =
     typeof resolved.page === "string" ? resolved.page : undefined;
+
+  if (pageId === "latest") {
+    const { redirect } = await import("next/navigation");
+    redirect("/latest-projects");
+  }
+
   const openGroupId =
     typeof resolved.open === "string" ? resolved.open : undefined;
   const page = getPage(pageId);
