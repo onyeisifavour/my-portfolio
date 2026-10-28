@@ -10,7 +10,12 @@ import {
 import { pinnedConfig } from "@/lib/pinned-config";
 import { CategoryFilterBar } from "@/components/category-filter-bar";
 import { CategoryGroupBrowser } from "@/components/category-group-browser";
-import { ProjectCard } from "@/components/project-card";
+import { CuratedLatestProjectsFeed } from "@/components/curated-latest-feed";
+
+type CategoryPageProps = {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
 function getCategoryPage(id: string): ExplorePage | undefined {
   return explorePages.find(
@@ -30,7 +35,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<"/explore/projects/[category]">,
+  props: CategoryPageProps,
 ): Promise<Metadata> {
   const { category } = await props.params;
   const page = getCategoryPage(category);
@@ -43,7 +48,7 @@ export async function generateMetadata(
 }
 
 export default async function ProjectCategoryPage(
-  props: PageProps<"/explore/projects/[category]">,
+  props: CategoryPageProps,
 ) {
   const { category } = await props.params;
   const searchParams = await props.searchParams;
@@ -124,20 +129,7 @@ export default async function ProjectCategoryPage(
             </header>
 
             {projects.length > 0 ? (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {projects.map(({ project, group }) => (
-                  <ProjectCard
-                    key={project.slug}
-                    title={project.title}
-                    description={project.about}
-                    techStack={project.tags}
-                    slug={project.slug}
-                    status={project.status}
-                    group={group.title}
-                    year={project.year}
-                  />
-                ))}
-              </div>
+              <CuratedLatestProjectsFeed items={projects} />
             ) : (
               <p className="border-y border-ink/10 py-10 text-ink/60">
                 Nothing here yet.

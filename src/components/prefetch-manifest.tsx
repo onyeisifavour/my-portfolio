@@ -21,10 +21,13 @@ export async function PrefetchManifest() {
     "/explore/projects",
     ...explorePages
       .filter((page) => landingExplorePages.includes(page.id))
-      .map((page) => `/explore/projects/${page.id}`),
+      .map((page) => `/projects/category/${page.id}`),
     ...posts.map((post) => `/blog/${post.slug}`),
+    ...projectGroups.map((group) => `/projects/group/${group.id}`),
     ...projectGroups.flatMap((group) =>
-      group.projects.map((project) => `/projects/${project.slug}`),
+      group.projects.map(
+        (project) => `/projects/project-page/${project.slug}`,
+      ),
     ),
   ];
 

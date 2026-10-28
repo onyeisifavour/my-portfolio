@@ -2,6 +2,24 @@ import Link from "next/link";
 import type { GroupProject, ProjectGroup } from "@/lib/project-groups";
 import type { PostMeta } from "@/lib/posts";
 import { pinnedConfig } from "@/lib/pinned-config";
+import { getProjectGroupHref } from "@/lib/project-group-links";
+
+function ArrowIcon({ className = "size-3" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
 
 function timeAgo(dateString: string) {
   if (!dateString) return "";
@@ -33,7 +51,7 @@ export function CuratedLatestProjectsFeed({
     {},
   );
 
-  let groupEntries = Object.values(groups);
+  const groupEntries = Object.values(groups);
   // Sort: pinned groups first, then by recency (year desc)
   groupEntries.sort((a, b) => {
     const aPinned = pinnedConfig.projectGroups.includes(a.group.id) ? 1 : 0;
@@ -62,7 +80,7 @@ export function CuratedLatestProjectsFeed({
         const isGroupPinned = pinnedConfig.projectGroups.includes(group.id);
         return (
           <section key={group.id} className={isGroupPinned ? "rounded-lg ring-1 ring-accent/30" : ""}>
-            <header className="mb-5 flex items-start justify-between gap-4">
+            <header className="mb-5 flex flex-wrap items-start justify-between gap-4">
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-2">
                   <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
@@ -88,9 +106,18 @@ export function CuratedLatestProjectsFeed({
                   <p className="max-w-xl text-sm text-ink/60">{group.summary}</p>
                 )}
               </div>
-              <span className="font-mono text-[10px] tracking-[0.12em] text-ink/40 uppercase">
-                {projects.length} {projects.length === 1 ? "item" : "items"}
-              </span>
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <span className="font-mono text-[10px] tracking-[0.12em] text-ink/40 uppercase">
+                  {projects.length} {projects.length === 1 ? "item" : "items"}
+                </span>
+                <Link
+                  href={getProjectGroupHref(group.id)}
+                  className="group/link inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.1em] text-ink/55 uppercase transition-colors hover:text-accent"
+                >
+                  Group page
+                  <ArrowIcon className="size-3 transition-transform group-hover/link:translate-x-0.5" />
+                </Link>
+              </div>
             </header>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -99,7 +126,7 @@ export function CuratedLatestProjectsFeed({
                 return (
                   <Link
                     key={project.slug}
-                    href={`/projects/${project.slug}`}
+                    href={`/projects/project-page/${project.slug}`}
                     className={`group relative flex flex-col gap-2 border px-4 py-4 transition-colors sm:px-5 ${
                       isPinned
                         ? "border-accent/40 bg-accent-soft/10 hover:border-accent/60"
@@ -165,7 +192,7 @@ export function CuratedLatestBlogsFeed({ posts }: { posts: PostMeta[] }) {
     {},
   );
 
-  let groupEntries = Object.values(groups);
+  const groupEntries = Object.values(groups);
   groupEntries.sort((a, b) => {
     const aKey = `${a.category}::${a.group}`;
     const bKey = `${b.category}::${b.group}`;

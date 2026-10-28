@@ -64,7 +64,7 @@ function Tags({ tags }: { tags: string[] }) {
 function FeaturedProject({ project }: { project: GroupProject }) {
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/projects/project-page/${project.slug}`}
       className="group flex flex-col gap-4 border border-ink/10 bg-paper/50 p-5 transition-colors duration-200 hover:border-accent/45 hover:bg-accent-soft/22 sm:flex-row sm:items-start sm:justify-between sm:gap-8"
     >
       <div className="min-w-0 flex-1">
@@ -98,7 +98,7 @@ function FeaturedProject({ project }: { project: GroupProject }) {
 function ProjectPanel({ project, index }: { project: GroupProject; index: number }) {
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/projects/project-page/${project.slug}`}
       className="group flex min-h-[190px] flex-col bg-paper/50 p-4 transition-colors duration-200 hover:-translate-y-0.5 hover:bg-accent-soft/22"
     >
       <div className="flex items-start justify-between gap-3 border-b border-ink/10 pb-2.5">

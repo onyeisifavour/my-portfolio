@@ -9,15 +9,15 @@ import {
 import { ProjectCard } from "@/components/project-card";
 
 export function generateStaticParams() {
-  return getAllProjectGroupIds().map((id) => ({ id }));
+  return getAllProjectGroupIds().map((group) => ({ group }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ group: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { group: id } = await params;
   const group = getProjectGroupById(id);
   if (!group) return {};
 
@@ -30,15 +30,15 @@ export async function generateMetadata({
 export default async function ProjectGroupPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ group: string }>;
 }) {
-  const { id } = await params;
+  const { group: id } = await params;
   const group = getProjectGroupById(id);
   if (!group) notFound();
 
   const category = getExplorePageForGroup(group);
   const backHref = category
-    ? `/explore/projects/${category.id}`
+    ? `/projects/category/${category.id}`
     : "/explore/projects";
   const categoryLabel = category
     ? category.name.charAt(0).toUpperCase() + category.name.slice(1)

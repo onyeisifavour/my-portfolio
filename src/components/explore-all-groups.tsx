@@ -77,7 +77,7 @@ export function ExploreAllGroups({
             {hasMore && (
               <div className="mt-6 flex justify-center">
                 <Link
-                  href={`/explore/projects/${sectionId}`}
+                  href={`/projects/category/${sectionId}`}
                   className="group inline-flex items-center gap-2 border border-ink/16 px-5 py-2.5 font-mono text-[11px] tracking-[0.12em] uppercase text-ink transition-all hover:border-accent/55 hover:bg-accent-soft/45 hover:text-accent"
                 >
                   See all in {label}

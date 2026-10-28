@@ -67,6 +67,33 @@ export function resolveSearchScope(
       };
     }
 
+    if (segments[1] === "category" && segments[2]) {
+      return {
+        key: `project-category:${segments[2]}`,
+        label: `${segments[2]} projects`,
+        sections: ["groups", "projects"],
+        category: segments[2],
+      };
+    }
+
+    if (segments[1] === "group" && segments[2]) {
+      return {
+        key: `project-group:${segments[2]}`,
+        label: "this project group",
+        sections: ["projects"],
+        projectGroupId: segments[2],
+      };
+    }
+
+    if (segments[1] === "project-page" && segments[2]) {
+      return {
+        key: `project:${segments[2]}`,
+        label: "this project group",
+        sections: ["groups", "projects"],
+        projectSlug: segments[2],
+      };
+    }
+
     if (segments[1]) {
       return {
         key: `project:${segments[1]}`,

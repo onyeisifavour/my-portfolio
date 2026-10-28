@@ -36,6 +36,16 @@ const nextConfig: NextConfig = {
         destination: "/projects/latest",
         permanent: false,
       },
+      {
+        source: "/explore/projects/groups/:group",
+        destination: "/projects/group/:group",
+        permanent: false,
+      },
+      {
+        source: "/explore/projects/:category",
+        destination: "/projects/category/:category",
+        permanent: false,
+      },
     ];
   },
 };

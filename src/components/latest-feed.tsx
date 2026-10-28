@@ -72,7 +72,7 @@ export function LatestProjectsFeed({
             {projects.map((project) => (
               <Link
                 key={project.slug}
-                href={`/projects/${project.slug}`}
+                href={`/projects/project-page/${project.slug}`}
                 className="group relative flex flex-col gap-2 border border-ink/10 bg-paper px-4 py-4 transition-colors hover:border-accent/40 sm:px-5"
               >
                 <div className="flex items-start justify-between gap-3">

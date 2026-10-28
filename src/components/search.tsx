@@ -282,7 +282,7 @@ export function SearchButton() {
     {
       kind: "groups" as const,
       items: groupResults.map((group) => ({
-        href: `/explore/projects?page=${group.pages[0] ?? "latest"}&open=${group.id}`,
+        href: `/projects/group/${group.id}`,
         title: group.title,
         meta: `${group.projects.length} project${group.projects.length === 1 ? "" : "s"}`,
       })),
@@ -290,7 +290,7 @@ export function SearchButton() {
     {
       kind: "projects" as const,
       items: projectResults.map(({ project, group }) => ({
-        href: `/projects/${project.slug}`,
+        href: `/projects/project-page/${project.slug}`,
         title: project.title,
         meta: group.title,
       })),
