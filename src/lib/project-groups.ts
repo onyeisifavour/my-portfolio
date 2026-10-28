@@ -87,7 +87,38 @@ export const explorePages: ExplorePage[] = [
       },
     ],
   },
-
+  {
+    id: "study-kits-4",
+    title: "Study kits 4",
+    pages: ["study"],
+    summary: "More study resources.",
+    projects: [
+      {
+        slug: "quiz-builder",
+        title: "Quiz Builder",
+        about: "Build and practice with custom quizzes.",
+        tags: ["Next.js", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "study-kits-5",
+    title: "Study kits 5",
+    pages: ["study"],
+    summary: "Extra study utilities.",
+    projects: [
+      {
+        slug: "note-sync",
+        title: "Note Sync",
+        about: "Sync notes across devices seamlessly.",
+        tags: ["Rust", "CLI"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];
@@ -325,7 +356,38 @@ export const projectGroups: ProjectGroup[] = [
       },
     ],
   },
-
+  {
+    id: "study-kits-4",
+    title: "Study kits 4",
+    pages: ["study"],
+    summary: "More study resources.",
+    projects: [
+      {
+        slug: "quiz-builder",
+        title: "Quiz Builder",
+        about: "Build and practice with custom quizzes.",
+        tags: ["Next.js", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "study-kits-5",
+    title: "Study kits 5",
+    pages: ["study"],
+    summary: "Extra study utilities.",
+    projects: [
+      {
+        slug: "note-sync",
+        title: "Note Sync",
+        about: "Sync notes across devices seamlessly.",
+        tags: ["Rust", "CLI"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
 ];
 
 export function getProjectBySlug(slug: string) {
