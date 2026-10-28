@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { projectGroups, explorePages } from "@/lib/project-groups";
+import {
+  explorePages,
+  projectGroups,
+  type GroupProject,
+  type ProjectGroup,
+} from "@/lib/project-groups";
 import { ProjectCard } from "@/components/project-card";
 
 export const metadata = {
@@ -14,7 +19,7 @@ export default function LatestProjectsPage() {
   const projectsByCategory = categories.map((categoryId) => {
     const page = explorePages.find((p) => p.id === categoryId);
     const groups = projectGroups.filter((g) => g.pages.includes(categoryId));
-    const projects: Array<{ project: any; group: any }> = [];
+    const projects: Array<{ project: GroupProject; group: ProjectGroup }> = [];
     for (const group of groups) {
       for (const project of group.projects) {
         projects.push({ project, group });
@@ -100,7 +105,7 @@ export default function LatestProjectsPage() {
 
                 <div className="flex justify-center">
                   <Link
-                    href={`/explore/projects/${categoryId}`}
+                    href={`/explore/projects/${categoryId}?filter=latest`}
                     className="group inline-flex items-center gap-2 border border-ink/16 px-5 py-2.5 font-mono text-[11px] tracking-[0.12em] uppercase text-ink transition-all hover:border-accent/55 hover:bg-accent-soft/45 hover:text-accent"
                   >
                     See all in {categoryLabel}

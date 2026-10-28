@@ -3,15 +3,25 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   explorePages,
+  getProjectGroupsForCategory,
   landingExplorePages,
-  projectGroups,
   type ExplorePage,
 } from "@/lib/project-groups";
+import { pinnedConfig } from "@/lib/pinned-config";
+import { CategoryFilterBar } from "@/components/category-filter-bar";
+import { CategoryGroupBrowser } from "@/components/category-group-browser";
 import { ProjectCard } from "@/components/project-card";
 
 function getCategoryPage(id: string): ExplorePage | undefined {
   return explorePages.find(
     (page) => landingExplorePages.includes(page.id) && page.id === id,
+  );
+}
+
+function getGroupYear(group: { projects: Array<{ year: string }> }) {
+  return Math.max(
+    0,
+    ...group.projects.map((project) => Number(project.year) || 0),
   );
 }
 
@@ -36,11 +46,25 @@ export default async function ProjectCategoryPage(
   props: PageProps<"/explore/projects/[category]">,
 ) {
   const { category } = await props.params;
+  const searchParams = await props.searchParams;
   const page = getCategoryPage(category);
   if (!page) notFound();
 
-  const projects = projectGroups
-    .filter((group) => group.pages.includes(page.id))
+  const latestActive = searchParams.filter === "latest";
+  const categoryGroups = getProjectGroupsForCategory(page.id);
+
+  const pinnedGroups = pinnedConfig.projectGroups.flatMap((id) => {
+    const group = categoryGroups.find((candidate) => candidate.id === id);
+    return group ? [group] : [];
+  });
+
+  const allGroups = [...categoryGroups].sort((a, b) => {
+    const yearDelta = getGroupYear(b) - getGroupYear(a);
+    if (yearDelta !== 0) return yearDelta;
+    return a.title.localeCompare(b.title);
+  });
+
+  const projects = categoryGroups
     .flatMap((group) =>
       group.projects.map((project) => ({ project, group })),
     )
@@ -80,38 +104,53 @@ export default async function ProjectCategoryPage(
           </p>
         </header>
 
-        <section className="mt-12">
-          <header className="mb-6 flex items-end justify-between gap-4 border-b border-ink/10 pb-4">
-            <h2 className="font-display text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
-              All projects
-            </h2>
-            <span className="font-mono text-[11px] tracking-[0.12em] text-ink/45 uppercase">
-              {projects.length}{" "}
-              {projects.length === 1 ? "project" : "projects"}
-            </span>
-          </header>
+        <CategoryFilterBar active={latestActive} />
 
-          {projects.length > 0 ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map(({ project, group }) => (
-                <ProjectCard
-                  key={project.slug}
-                  title={project.title}
-                  description={project.about}
-                  techStack={project.tags}
-                  slug={project.slug}
-                  status={project.status}
-                  group={group.title}
-                  year={project.year}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="border-y border-ink/10 py-10 text-ink/60">
-              Nothing here yet.
-            </p>
-          )}
-        </section>
+        {latestActive ? (
+          <section className="mt-10">
+            <header className="mb-6 flex items-end justify-between gap-4 border-b border-ink/10 pb-4">
+              <div className="flex flex-col gap-1.5">
+                <p className="font-mono text-[10px] tracking-[0.18em] text-accent uppercase">
+                  Latest
+                </p>
+                <h2 className="font-display text-2xl leading-tight tracking-tight text-ink sm:text-3xl">
+                  Latest projects
+                </h2>
+              </div>
+              <span className="shrink-0 font-mono text-[11px] tracking-[0.12em] text-ink/45 uppercase">
+                {projects.length}{" "}
+                {projects.length === 1 ? "project" : "projects"}
+              </span>
+            </header>
+
+            {projects.length > 0 ? (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {projects.map(({ project, group }) => (
+                  <ProjectCard
+                    key={project.slug}
+                    title={project.title}
+                    description={project.about}
+                    techStack={project.tags}
+                    slug={project.slug}
+                    status={project.status}
+                    group={group.title}
+                    year={project.year}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="border-y border-ink/10 py-10 text-ink/60">
+                Nothing here yet.
+              </p>
+            )}
+          </section>
+        ) : (
+          <CategoryGroupBrowser
+            key={page.id}
+            pinnedGroups={pinnedGroups}
+            allGroups={allGroups}
+          />
+        )}
       </div>
     </main>
   );

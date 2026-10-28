@@ -84,6 +84,15 @@ export function resolveSearchScope(
   }
 
   if (segments[0] === "explore" && segments[1] === "projects") {
+    if (segments[2] === "groups" && segments[3]) {
+      return {
+        key: `project-group:${segments[3]}`,
+        label: "this group",
+        sections: ["projects"],
+        projectGroupId: segments[3],
+      };
+    }
+
     const category = segments[2];
 
     if (category) {

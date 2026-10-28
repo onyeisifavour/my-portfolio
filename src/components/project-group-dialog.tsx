@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { GroupProject, ProjectGroup } from "@/lib/project-groups";
+import { getProjectGroupHref } from "@/lib/project-group-links";
 import { SearchFilters, type SearchFilter } from "@/components/search-filters";
 
 const STATUS_LABELS: Record<GroupProject["status"], string> = {
@@ -275,15 +276,24 @@ export function ProjectGroupDialog({
         )}
 
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5 pb-7">
-          <div className="mb-4 flex items-baseline justify-between gap-4 border-b border-ink/10 pb-3.5">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-ink/10 pb-3.5">
             {group.summary && (
               <p className="text-[13px] leading-normal text-ink/60">{group.summary}</p>
             )}
-            <span className="shrink-0 font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
-              {query ? `${projects.length} of ` : ""}
-              {group.projects.length}{" "}
-              {group.projects.length === 1 ? "project" : "projects"}
-            </span>
+            <div className="ml-auto flex shrink-0 items-center gap-3">
+              <span className="font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
+                {query ? `${projects.length} of ` : ""}
+                {group.projects.length}{" "}
+                {group.projects.length === 1 ? "project" : "projects"}
+              </span>
+              <Link
+                href={getProjectGroupHref(group.id)}
+                className="group/link inline-flex items-center gap-1.5 border border-ink/12 px-2.5 py-1 font-mono text-[10px] tracking-[0.1em] text-ink/65 uppercase transition-colors hover:border-accent/45 hover:bg-accent-soft/35 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                Group page
+                <ArrowIcon className="size-3 transition-transform group-hover/link:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
 
           {projects.length === 0 && (

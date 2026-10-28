@@ -856,6 +856,18 @@ export function getProjectBySlug(slug: string) {
   return null;
 }
 
+export function getProjectGroupById(id: string) {
+  return projectGroups.find((group) => group.id === id) ?? null;
+}
+
+export function getAllProjectGroupIds() {
+  return projectGroups.map((group) => group.id);
+}
+
+export function getProjectGroupsForCategory(categoryId: string) {
+  return projectGroups.filter((group) => group.pages.includes(categoryId));
+}
+
 export function getAllProjectSlugs() {
   const slugs = new Set<string>();
   for (const group of projectGroups) {
