@@ -41,19 +41,19 @@ export const explorePages: ExplorePage[] = [
     id: "creatives",
     name: "creatives",
     heading: "Creative playground",
-    description: "Design experiments, palettes, and visual systems.",
+    description: "My most fancy ideas are here",
   },
   {
     id: "gigs",
     name: "gigs",
     heading: "Freelancing gigs",
-    description: "Client work — landing pages and portfolios shipped fast.",
+    description: "Things I built for 'REAL'",
   },
   {
     id: "products",
     name: "products",
     heading: "Product work",
-    description: "Dashboards and tools built for real users.",
+    description: "Line one to ultra-done",
   },
 ];
 

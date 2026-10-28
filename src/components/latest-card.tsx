@@ -29,7 +29,7 @@ export function LatestProjectCard() {
           Explore my latest builds
         </h3>
         <p className="text-ink/60">
-          See what I&apos;ve been designing, coding, and shipping.
+          I think my last builds are most special
         </p>
       </div>
       <ArrowIcon />

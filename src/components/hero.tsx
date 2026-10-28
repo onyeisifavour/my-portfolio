@@ -15,14 +15,11 @@ export function Hero() {
           {site.tagline}
         </p>
         <div className="animate-rise-delay-3 mt-10 flex flex-wrap items-center gap-3">
-          <a href="#work" className="btn-primary">
-            View work
-          </a>
           <a
             href={site.links.email}
-            className="btn-ghost"
+            className="btn-ghost px-10 py-3 text-base"
           >
-            Get in touch
+            Let's talk
           </a>
         </div>
       </div>
