@@ -24,13 +24,16 @@ export function ContentTabs({ posts }: { posts: PostMeta[] }) {
   function selectTab(next: Tab) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", next);
+    document
+      .getElementById("work")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
     startTransition(() => {
-      router.replace(`/home?${params.toString()}`, { scroll: false });
+      router.replace(`/home?${params.toString()}#work`, { scroll: false });
     });
   }
 
   return (
-    <section>
+    <section id="work" className="scroll-mt-24">
       <div className="mb-8 flex items-end justify-between gap-4 border-b border-ink/10">
         <div className="relative flex gap-1" role="tablist" aria-label="Work">
           {(

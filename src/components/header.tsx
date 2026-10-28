@@ -5,8 +5,8 @@ import { SearchButton } from "@/components/search";
 import { site } from "@/lib/site";
 
 const nav = [
-  { href: "/home?tab=projects", label: "Projects" },
-  { href: "/home?tab=blog", label: "Blog" },
+  { href: "/home?tab=projects#work", label: "Projects" },
+  { href: "/home?tab=blog#work", label: "Blog" },
 ];
 
 export function Header() {

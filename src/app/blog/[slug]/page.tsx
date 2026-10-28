@@ -65,7 +65,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
       <main id="article">
         <div className="article-shell">
           {/* BACK BUTTON — points at the blog tab on the home page */}
-          <Link className="back-button" href="/home?tab=blog">
+          <Link className="back-button" href="/home?tab=blog#work">
             <span aria-hidden="true">←</span> BACK
           </Link>
 

@@ -19,7 +19,7 @@ export default async function LatestPage() {
     <main className="flex-1">
       <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
         <Link
-          href="/home?tab=projects"
+          href="/home?tab=projects#work"
           className="font-mono text-xs tracking-wider text-ink/50 uppercase transition-colors hover:text-accent"
         >
           ← Back
