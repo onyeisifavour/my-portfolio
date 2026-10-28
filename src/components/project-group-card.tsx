@@ -10,16 +10,14 @@ const CELL_CLASSES_4 = [
 ];
 
 function getCellClasses(count: number, index: number) {
-  if (count === 1) return "";
+  if (count === 1) return "col-span-2 row-span-2";
   if (count === 2) {
-    if (index === 0) return "border-r border-ink/10";
-    return "";
+    return index === 0 ? "col-span-2 border-b border-ink/10" : "col-span-2";
   }
   if (count === 3) {
     if (index === 0) return "border-b border-r border-ink/10";
     if (index === 1) return "border-b border-ink/10";
-    if (index === 2) return "col-span-2 border-ink/10";
-    return "";
+    return "col-span-2";
   }
   if (count === 4) return CELL_CLASSES_4[index] ?? "";
   return "";
@@ -33,7 +31,7 @@ function Cell({
   cellClass: string;
 }) {
   return (
-    <div className={`flex h-full min-h-[104px] flex-col gap-1.5 overflow-hidden p-3 ${cellClass}`}>
+    <div className={`flex h-full flex-col gap-1.5 overflow-hidden p-3 ${cellClass}`}>
       <h4 className="font-display text-[13px] leading-tight font-semibold tracking-tight text-ink">
         {project.title}
       </h4>
@@ -94,7 +92,7 @@ export function ProjectGroupCard({
         </span>
       </header>
 
-      <div className="grid grid-cols-2">
+      <div className="grid h-[208px] grid-cols-2 grid-rows-2">
         {preview.map((project, i) => (
           <Cell
             key={project.slug}

@@ -3,6 +3,7 @@ export type ExplorePage = {
   name: string;
   heading: string;
   description: string;
+  pageDescription?: string;
 };
 
 export type GroupProjectStatus = "live" | "wip" | "archived";
@@ -36,122 +37,43 @@ export const explorePages: ExplorePage[] = [
     name: "study",
     heading: "All study kits and tools.",
     description: "Tools help me study better. They might for you.",
+    pageDescription:
+      "A growing set of tools for capturing notes, planning sessions, and making recall stick.",
   },
   {
     id: "creatives",
     name: "creatives",
     heading: "Creative playground",
     description: "My fanciest ideas are here.",
+    pageDescription:
+      "Visual studies in type, colour, motion, and layout — the ideas I test before they ship.",
   },
   {
     id: "gigs",
     name: "gigs",
     heading: "Freelancing gigs",
     description: "Things I built for real.",
+    pageDescription:
+      "Client projects built end to end: landing pages, portfolios, and booking flows.",
   },
   {
     id: "products",
     name: "products",
     heading: "Product work",
     description: "From concept to polished product.",
-  },
-
-  {
-    id: "study-extra-1",
-    title: "Study Extra 1",
-    pages: ["study"],
-    summary: "Extra study tools.",
-    projects: [
-      {
-        slug: "flashcard-pro",
-        title: "Flashcard Pro",
-        about: "Advanced flashcard system.",
-        tags: ["React", "TypeScript"],
-        status: "wip",
-        year: "2026",
-      },
-    ],
-  },
-  {
-    id: "study-extra-2",
-    title: "Study Extra 2",
-    pages: ["study"],
-    summary: "More study resources.",
-    projects: [
-      {
-        slug: "quiz-master",
-        title: "Quiz Master",
-        about: "Quiz generation and practice.",
-        tags: ["Next.js", "TypeScript"],
-        status: "live",
-        year: "2026",
-      },
-    ],
-  },
-
-  {
-    id: "creatives-extra-1",
-    title: "Creatives Extra 1",
-    pages: ["creatives"],
-    summary: "Extra creative experiments.",
-    projects: [
-      { slug: "neon-grid", title: "Neon Grid", about: "Glowing grid experiments.", tags: ["CSS", "JS"], status: "live", year: "2026" },
-    ],
-  },
-  {
-    id: "creatives-extra-2",
-    title: "Creatives Extra 2",
-    pages: ["creatives"],
-    summary: "More visual experiments.",
-    projects: [
-      { slug: "color-lab", title: "Color Lab", about: "Color palette exploration.", tags: ["Figma", "CSS"], status: "wip", year: "2026" },
-    ],
-  },
-  {
-    id: "gigs-extra-1",
-    title: "Gigs Extra 1",
-    pages: ["gigs"],
-    summary: "Extra client work.",
-    projects: [
-      { slug: "agency-site", title: "Agency Site", about: "Agency landing page.", tags: ["Next.js", "Tailwind"], status: "live", year: "2026" },
-    ],
-  },
-  {
-    id: "gigs-extra-2",
-    title: "Gigs Extra 2",
-    pages: ["gigs"],
-    summary: "More client projects.",
-    projects: [
-      { slug: "portfolio-clone", title: "Portfolio Clone", about: "Portfolio redesign.", tags: ["React", "CSS"], status: "live", year: "2026" },
-    ],
-  },
-  {
-    id: "products-extra-1",
-    title: "Products Extra 1",
-    pages: ["products"],
-    summary: "Extra product builds.",
-    projects: [
-      { slug: "dash-pro", title: "Dash Pro", about: "Analytics dashboard.", tags: ["Next.js", "Postgres"], status: "wip", year: "2026" },
-    ],
-  },
-  {
-    id: "products-extra-2",
-    title: "Products Extra 2",
-    pages: ["products"],
-    summary: "More product tools.",
-    projects: [
-      { slug: "api-tool", title: "API Tool", about: "API testing utility.", tags: ["TypeScript", "Node"], status: "live", year: "2026" },
-    ],
+    pageDescription:
+      "Dashboards and internal tools shaped around the questions teams ask every day.",
   },
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];
 
 export const projectGroups: ProjectGroup[] = [
+  // Study
   {
     id: "study-kits",
     title: "Study kits",
-    pages: ["study", "latest"],
+    pages: ["study"],
     summary: "Everything I use to turn messy notes into a focused study loop.",
     projects: [
       {
@@ -229,9 +151,123 @@ export const projectGroups: ProjectGroup[] = [
     ],
   },
   {
+    id: "study-sprints",
+    title: "Study sprints",
+    pages: ["study"],
+    summary: "Short, timed study sprints with a clear start and finish.",
+    projects: [
+      {
+        slug: "sprint-plan",
+        title: "Sprint Plan",
+        about: "Plan the next focused session in under a minute.",
+        tags: ["Svelte", "Local-first"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "focus-timer",
+        title: "Focus Timer",
+        about: "A distraction-free timer that logs every completed sprint.",
+        tags: ["React", "IndexedDB"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "review-log",
+        title: "Review Log",
+        about: "A lightweight history of what you studied and when.",
+        tags: ["TypeScript", "SQLite"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "recall-drills",
+    title: "Recall drills",
+    pages: ["study"],
+    summary: "Quick recall drills built around active retrieval.",
+    projects: [
+      {
+        slug: "drill-deck",
+        title: "Drill Deck",
+        about: "Randomised question decks that adapt to your weak spots.",
+        tags: ["Next.js", "Postgres"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "recall-map",
+        title: "Recall Map",
+        about: "A visual map of the topics you have actually retained.",
+        tags: ["React", "D3"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "quiz-lab",
+    title: "Quiz lab",
+    pages: ["study"],
+    summary: "Generate, edit, and practice custom quizzes.",
+    projects: [
+      {
+        slug: "quiz-builder",
+        title: "Quiz Builder",
+        about: "Build and practice with custom quizzes.",
+        tags: ["Next.js", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "note-tools",
+    title: "Note tools",
+    pages: ["study"],
+    summary: "Small utilities for capturing, linking, and exporting notes.",
+    projects: [
+      {
+        slug: "note-sync",
+        title: "Note Sync",
+        about: "Sync notes across devices seamlessly.",
+        tags: ["Rust", "CLI"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "note-graph",
+        title: "Note Graph",
+        about: "See how your notes connect without opening a heavy app.",
+        tags: ["TypeScript", "D3"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "note-export",
+        title: "Note Export",
+        about: "Export any note set to markdown, PDF, or plain text.",
+        tags: ["Node", "CLI"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "note-search",
+        title: "Note Search",
+        about: "Instant fuzzy search across every note you have written.",
+        tags: ["Rust", "SQLite"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+
+  // Creatives
+  {
     id: "grid-designs",
     title: "Grid designs",
-    pages: ["creatives", "latest"],
+    pages: ["creatives"],
     summary: "Modular grid studies — 1px hairlines, deliberate whitespace, and quiet type.",
     projects: [
       {
@@ -269,9 +305,163 @@ export const projectGroups: ProjectGroup[] = [
     ],
   },
   {
+    id: "palette-lab",
+    title: "Palette lab",
+    pages: ["creatives"],
+    summary: "Colour experiments, contrast checks, and palette exploration.",
+    projects: [
+      {
+        slug: "color-lab",
+        title: "Color Lab",
+        about: "Color palette exploration.",
+        tags: ["Figma", "CSS"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "type-studies",
+    title: "Type studies",
+    pages: ["creatives"],
+    summary: "Type scales and specimen pages built to test rhythm.",
+    projects: [
+      {
+        slug: "type-scale",
+        title: "Type Scale",
+        about: "A responsive type scale you can audit at a glance.",
+        tags: ["CSS", "HTML"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "type-specimen",
+        title: "Type Specimen",
+        about: "A specimen page that shows a face under real layout pressure.",
+        tags: ["Astro", "CSS"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "motion-sketches",
+    title: "Motion sketches",
+    pages: ["creatives"],
+    summary: "Small motion studies for easing, grids, and scroll.",
+    projects: [
+      {
+        slug: "easing-lab",
+        title: "Easing Lab",
+        about: "Compare easing curves side by side in the browser.",
+        tags: ["JS", "CSS"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "motion-grid",
+        title: "Motion Grid",
+        about: "A grid that reflows with deliberate, readable motion.",
+        tags: ["React", "Framer Motion"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "scroll-study",
+        title: "Scroll Study",
+        about: "Scroll-linked effects without the jank.",
+        tags: ["CSS", "JS"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "layout-experiments",
+    title: "Layout experiments",
+    pages: ["creatives"],
+    summary: "Editorial and product layouts pushed into unusual shapes.",
+    projects: [
+      {
+        slug: "editorial-grid",
+        title: "Editorial Grid",
+        about: "A magazine grid that survives long headlines.",
+        tags: ["CSS", "HTML"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "card-stack",
+        title: "Card Stack",
+        about: "Stacked cards with clear depth and no visual noise.",
+        tags: ["React", "Tailwind"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "split-view",
+        title: "Split View",
+        about: "A two-pane reading layout for dense content.",
+        tags: ["Next.js", "CSS"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "whitespace-study",
+        title: "Whitespace Study",
+        about: "How much empty space a layout can carry before it floats.",
+        tags: ["Figma", "CSS"],
+        status: "archived",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "texture-sets",
+    title: "Texture sets",
+    pages: ["creatives"],
+    summary: "Border, grain, and pattern sets for quiet interfaces.",
+    projects: [
+      {
+        slug: "grain-set",
+        title: "Grain Set",
+        about: "Subtle film grain that survives compression.",
+        tags: ["CSS", "SVG"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "noise-set",
+        title: "Noise Set",
+        about: "Procedural noise patterns for empty states.",
+        tags: ["Canvas", "JS"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "border-set",
+        title: "Border Set",
+        about: "Hairline border recipes for dense layouts.",
+        tags: ["CSS", "Tailwind"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "pattern-set",
+        title: "Pattern Set",
+        about: "A small library of repeatable background patterns.",
+        tags: ["SVG", "CSS"],
+        status: "archived",
+        year: "2026",
+      },
+    ],
+  },
+
+  // Gigs
+  {
     id: "freelance-landing",
     title: "Freelance landings",
-    pages: ["gigs", "latest"],
+    pages: ["gigs"],
     summary: "Landing pages and portfolios built for clients under tight deadlines.",
     projects: [
       {
@@ -309,9 +499,163 @@ export const projectGroups: ProjectGroup[] = [
     ],
   },
   {
+    id: "cafe-weekend",
+    title: "Café weekend",
+    pages: ["gigs"],
+    summary: "A fast one-page build for a local café.",
+    projects: [
+      {
+        slug: "cafe-menu",
+        title: "Café Menu",
+        about: "A mobile-first menu page that loads in under a second.",
+        tags: ["Astro", "CSS"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "brand-sprints",
+    title: "Brand sprints",
+    pages: ["gigs"],
+    summary: "Short brand sprints for small teams and solo founders.",
+    projects: [
+      {
+        slug: "brand-kit",
+        title: "Brand Kit",
+        about: "A compact brand kit with type, colour, and usage rules.",
+        tags: ["Figma", "CSS"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "logo-grid",
+        title: "Logo Grid",
+        about: "Logo variations laid out on a single reviewable grid.",
+        tags: ["Figma", "SVG"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "launch-pages",
+    title: "Launch pages",
+    pages: ["gigs"],
+    summary: "Launch pages for products, courses, and events.",
+    projects: [
+      {
+        slug: "launch-saas",
+        title: "Launch SaaS",
+        about: "A product launch page with pricing and social proof.",
+        tags: ["Next.js", "Tailwind"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "launch-course",
+        title: "Launch Course",
+        about: "A course landing page built around a single clear promise.",
+        tags: ["Astro", "MDX"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "launch-event",
+        title: "Launch Event",
+        about: "An event page with schedule, speakers, and registration.",
+        tags: ["React", "Vite"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "studio-sites",
+    title: "Studio sites",
+    pages: ["gigs"],
+    summary: "Portfolio sites for studios that need the work to speak first.",
+    projects: [
+      {
+        slug: "studio-arch",
+        title: "Studio Arch",
+        about: "A quiet portfolio for an architecture practice.",
+        tags: ["Next.js", "Sanity"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "studio-photo",
+        title: "Studio Photo",
+        about: "A full-bleed photography portfolio with fast image loading.",
+        tags: ["Astro", "Sharp"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "studio-design",
+        title: "Studio Design",
+        about: "Case-study-first site for a product design studio.",
+        tags: ["Next.js", "MDX"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "studio-film",
+        title: "Studio Film",
+        about: "A reel-led site with lazy-loaded video previews.",
+        tags: ["React", "Mux"],
+        status: "archived",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "booking-flows",
+    title: "Booking flows",
+    pages: ["gigs"],
+    summary: "Booking pages that get out of the way.",
+    projects: [
+      {
+        slug: "booking-coach",
+        title: "Booking Coach",
+        about: "A one-screen booking flow for a coaching practice.",
+        tags: ["Next.js", "Cal"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "booking-clinic",
+        title: "Booking Clinic",
+        about: "Appointment booking with intake forms for a clinic.",
+        tags: ["React", "Supabase"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "booking-studio",
+        title: "Booking Studio",
+        about: "Room and equipment booking for a creative studio.",
+        tags: ["Next.js", "Postgres"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "booking-salon",
+        title: "Booking Salon",
+        about: "A mobile booking flow for a neighbourhood salon.",
+        tags: ["Vue", "Tailwind"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+
+  // Products
+  {
     id: "product-dashboards",
     title: "Product dashboards",
-    pages: ["products", "latest"],
+    pages: ["products"],
     summary: "Real dashboards for real users — charts, tables, and the boring bits done right.",
     projects: [
       {
@@ -348,35 +692,154 @@ export const projectGroups: ProjectGroup[] = [
       },
     ],
   },
-
   {
-    id: "study-kits-4",
-    title: "Study kits 4",
-    pages: ["study"],
-    summary: "More study resources.",
+    id: "api-console",
+    title: "API console",
+    pages: ["products"],
+    summary: "A small console for exploring and testing internal APIs.",
     projects: [
       {
-        slug: "quiz-builder",
-        title: "Quiz Builder",
-        about: "Build and practice with custom quizzes.",
-        tags: ["Next.js", "TypeScript"],
+        slug: "api-tool",
+        title: "API Tool",
+        about: "API testing utility.",
+        tags: ["TypeScript", "Node"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "billing-tools",
+    title: "Billing tools",
+    pages: ["products"],
+    summary: "Invoices, revenue splits, and the maths behind them.",
+    projects: [
+      {
+        slug: "invoice-flow",
+        title: "Invoice Flow",
+        about: "Create, send, and track invoices without spreadsheets.",
+        tags: ["Next.js", "Stripe"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "revenue-split",
+        title: "Revenue Split",
+        about: "Split revenue across collaborators with a clear audit trail.",
+        tags: ["React", "Postgres"],
         status: "wip",
         year: "2026",
       },
     ],
   },
   {
-    id: "study-kits-5",
-    title: "Study kits 5",
-    pages: ["study"],
-    summary: "Extra study utilities.",
+    id: "queue-ops",
+    title: "Queue ops",
+    pages: ["products"],
+    summary: "Tools for seeing, tracing, and retrying background jobs.",
     projects: [
       {
-        slug: "note-sync",
-        title: "Note Sync",
-        about: "Sync notes across devices seamlessly.",
-        tags: ["Rust", "CLI"],
+        slug: "queue-board",
+        title: "Queue Board",
+        about: "A live board of every queue and its current depth.",
+        tags: ["Next.js", "Redis"],
         status: "live",
+        year: "2026",
+      },
+      {
+        slug: "job-trace",
+        title: "Job Trace",
+        about: "Follow a single job across workers and retries.",
+        tags: ["Go", "OpenTelemetry"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "retry-console",
+        title: "Retry Console",
+        about: "Retry failed jobs in bulk with guardrails.",
+        tags: ["React", "Node"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "metrics-apps",
+    title: "Metrics apps",
+    pages: ["products"],
+    summary: "Focused apps for the numbers teams check every morning.",
+    projects: [
+      {
+        slug: "metric-cards",
+        title: "Metric Cards",
+        about: "A compact wall of the metrics that actually matter.",
+        tags: ["Next.js", "Recharts"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "cohort-view",
+        title: "Cohort View",
+        about: "Cohort retention without a BI tool.",
+        tags: ["React", "DuckDB"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "funnel-view",
+        title: "Funnel View",
+        about: "See exactly where users drop out of a flow.",
+        tags: ["Next.js", "Postgres"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "retention-view",
+        title: "Retention View",
+        about: "A simple retention dashboard for small teams.",
+        tags: ["Svelte", "SQLite"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "internal-tools",
+    title: "Internal tools",
+    pages: ["products"],
+    summary: "Admin panels and utilities that keep operations moving.",
+    projects: [
+      {
+        slug: "admin-panel",
+        title: "Admin Panel",
+        about: "A typed admin panel generated from the database schema.",
+        tags: ["Next.js", "Drizzle"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "role-manager",
+        title: "Role Manager",
+        about: "Manage roles and permissions without breaking access.",
+        tags: ["React", "Postgres"],
+        status: "live",
+        year: "2026",
+      },
+      {
+        slug: "audit-log",
+        title: "Audit Log",
+        about: "A readable audit trail for every sensitive action.",
+        tags: ["TypeScript", "Postgres"],
+        status: "wip",
+        year: "2026",
+      },
+      {
+        slug: "feature-flags",
+        title: "Feature Flags",
+        about: "Ship behind flags with a small, safe rollout UI.",
+        tags: ["Next.js", "Redis"],
+        status: "archived",
         year: "2026",
       },
     ],
@@ -412,7 +875,6 @@ export function getExplorePageForGroup(group: ProjectGroup) {
   }
   return explorePages.find((p) => p.id === group.pages[0]);
 }
-
 
 export function getRecentProjects(limit = 8) {
   const projects: Array<{ project: GroupProject; group: ProjectGroup }> = [];

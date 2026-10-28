@@ -21,7 +21,7 @@ function ArrowIcon() {
 export function ExploreCard({ page }: { page: ExplorePage }) {
   return (
     <Link
-      href={`/explore/projects?page=${page.id}`}
+      href={`/explore/projects/${page.id}`}
       className="group flex flex-col justify-between gap-4 border border-ink/12 bg-paper-deep px-5 py-5 transition-colors hover:border-accent/40 hover:bg-accent-soft/20 sm:px-6 sm:py-6"
     >
       <div className="flex flex-col gap-2">

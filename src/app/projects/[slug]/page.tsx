@@ -53,7 +53,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const { project, group } = result;
   const explorePage = getExplorePageForGroup(group);
   const backHref = explorePage
-    ? `/explore/projects?page=${explorePage.id}`
+    ? `/explore/projects/${explorePage.id}`
     : "/?tab=projects#work";
 
   return (

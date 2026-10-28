@@ -41,6 +41,9 @@ export function ExploreAllGroups({
 
         const preview = groups.slice(0, 4);
         const hasMore = groups.length > 4;
+        const label = page?.name
+          ? page.name.charAt(0).toUpperCase() + page.name.slice(1)
+          : sectionId;
 
         return (
           <section key={sectionId}>
@@ -72,12 +75,12 @@ export function ExploreAllGroups({
             </div>
 
             {hasMore && (
-              <div className="mt-6">
+              <div className="mt-6 flex justify-center">
                 <Link
-                  href={`/explore/projects?page=${sectionId}`}
-                  className="group inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
+                  href={`/explore/projects/${sectionId}`}
+                  className="group inline-flex items-center gap-2 border border-ink/16 px-5 py-2.5 font-mono text-[11px] tracking-[0.12em] uppercase text-ink transition-all hover:border-accent/55 hover:bg-accent-soft/45 hover:text-accent"
                 >
-                  See all
+                  See all in {label}
                   <svg
                     aria-hidden="true"
                     viewBox="0 0 24 24"

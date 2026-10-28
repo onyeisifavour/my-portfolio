@@ -1,6 +1,10 @@
 import { ResourcePrefetcher } from "@/components/resource-prefetcher";
 import { getAllPosts } from "@/lib/posts";
-import { explorePages, projectGroups } from "@/lib/project-groups";
+import {
+  explorePages,
+  landingExplorePages,
+  projectGroups,
+} from "@/lib/project-groups";
 
 /**
  * Server-side manifest of every route worth warming in the router cache.
@@ -13,7 +17,9 @@ export async function PrefetchManifest() {
     "/",
     "/explore/blog",
     "/explore/projects",
-    ...explorePages.map((page) => `/explore/projects?page=${page.id}`),
+    ...explorePages
+      .filter((page) => landingExplorePages.includes(page.id))
+      .map((page) => `/explore/projects/${page.id}`),
     ...posts.map((post) => `/blog/${post.slug}`),
     ...projectGroups.flatMap((group) =>
       group.projects.map((project) => `/projects/${project.slug}`),
