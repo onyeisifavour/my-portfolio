@@ -55,6 +55,39 @@ export const explorePages: ExplorePage[] = [
     heading: "Product work",
     description: "From concept to polished product.",
   },
+  {
+    id: "study-kits-2",
+    title: "Study kits 2",
+    pages: ["study"],
+    summary: "Additional study tools for focused learning.",
+    projects: [
+      {
+        slug: "flashdeck-2",
+        title: "Flashdeck 2",
+        about: "An enhanced spaced-repetition deck builder.",
+        tags: ["React", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "study-kits-3",
+    title: "Study kits 3",
+    pages: ["study"],
+    summary: "More experimental study tools.",
+    projects: [
+      {
+        slug: "anki-tools",
+        title: "Anki Tools",
+        about: "Utilities for Anki flashcard workflows.",
+        tags: ["Python", "CLI"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];
@@ -260,6 +293,39 @@ export const projectGroups: ProjectGroup[] = [
       },
     ],
   },
+  {
+    id: "study-kits-2",
+    title: "Study kits 2",
+    pages: ["study"],
+    summary: "Additional study tools for focused learning.",
+    projects: [
+      {
+        slug: "flashdeck-2",
+        title: "Flashdeck 2",
+        about: "An enhanced spaced-repetition deck builder.",
+        tags: ["React", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "study-kits-3",
+    title: "Study kits 3",
+    pages: ["study"],
+    summary: "More experimental study tools.",
+    projects: [
+      {
+        slug: "anki-tools",
+        title: "Anki Tools",
+        about: "Utilities for Anki flashcard workflows.",
+        tags: ["Python", "CLI"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+
 ];
 
 export function getProjectBySlug(slug: string) {
