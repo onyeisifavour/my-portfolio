@@ -26,10 +26,37 @@ function getCellClasses(count: number, index: number) {
 function Cell({
   project,
   cellClass,
+  single = false,
 }: {
   project: GroupProject;
   cellClass: string;
+  single?: boolean;
 }) {
+  if (single) {
+    return (
+      <div
+        className={`flex h-full flex-col justify-center gap-3 p-5 sm:p-6 ${cellClass}`}
+      >
+        <h4 className="font-display text-lg leading-snug font-semibold tracking-tight text-ink sm:text-xl">
+          {project.title}
+        </h4>
+        <p className="line-clamp-3 text-xs leading-relaxed text-ink/60 sm:text-[13px]">
+          {project.about}
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {project.tags.slice(0, 4).map((tag) => (
+            <span
+              key={tag}
+              className="border border-ink/12 bg-ink/[0.03] px-1.5 py-0.5 font-mono text-[9px] tracking-[0.08em] text-ink/70 uppercase"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`flex h-full flex-col gap-1.5 overflow-hidden p-3 ${cellClass}`}>
       <h4 className="font-display text-[13px] leading-tight font-semibold tracking-tight text-ink">
@@ -98,6 +125,7 @@ export function ProjectGroupCard({
             key={project.slug}
             project={project}
             cellClass={getCellClasses(preview.length, i)}
+            single={preview.length === 1}
           />
         ))}
       </div>
