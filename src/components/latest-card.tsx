@@ -40,7 +40,7 @@ export function LatestProjectCard() {
 export function LatestBlogCard() {
   return (
     <a
-      href="/explore/blog"
+      href="/blog/latest"
       className="group flex w-full items-center justify-between gap-6 border border-ink/12 bg-paper-deep px-6 py-5 transition-colors hover:border-accent/40 hover:bg-accent-soft/20 sm:px-8 sm:py-6"
     >
       <div className="flex flex-col gap-2">

@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { getBlogGroupById, getBlogGroups } from "@/lib/posts";
+import { getAllPosts, getBlogGroupById, getBlogGroups } from "@/lib/posts";
 import { BlogGroupCard } from "@/components/blog-group-card";
 import { BlogCard } from "@/components/blog-card";
 
 type ExploreBlogSearchParams = {
   group?: string | string[] | undefined;
+  category?: string | string[] | undefined;
 };
 
 async function ExploreBlogContent({
@@ -16,6 +17,8 @@ async function ExploreBlogContent({
   const resolved = await searchParams;
   const groupId =
     typeof resolved.group === "string" ? resolved.group : undefined;
+  const categoryFilter =
+    typeof resolved.category === "string" ? resolved.category : undefined;
 
   if (groupId) {
     const group = await getBlogGroupById(groupId);
@@ -55,6 +58,52 @@ async function ExploreBlogContent({
 
         <div className="mt-10 grid gap-4 border-y border-ink/10 py-6 sm:grid-cols-2">
           {group.posts.map((post) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (categoryFilter) {
+    const posts = await getAllPosts();
+    const categoryPosts = posts.filter(
+      (post) => (post.category || "Uncategorized") === categoryFilter,
+    );
+
+    return (
+      <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
+        <Link
+          href="/blog/latest"
+          className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="size-3.5 transition-transform group-hover:-translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back to latest
+        </Link>
+
+        <p className="mt-10 font-mono text-xs tracking-[0.2em] text-accent uppercase">
+          Category
+        </p>
+        <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-ink sm:text-5xl">
+          {categoryFilter}
+        </h1>
+        <p className="mt-3 max-w-xl text-lg leading-8 text-ink/65">
+          {categoryPosts.length} {categoryPosts.length === 1 ? "note" : "notes"}
+        </p>
+
+        <div className="mt-10 grid gap-4 border-y border-ink/10 py-6 sm:grid-cols-2 lg:grid-cols-3">
+          {categoryPosts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
         </div>
