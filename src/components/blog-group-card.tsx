@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { getBlogGroupHref } from "@/lib/blog-group-links";
 import type { BlogGroup } from "@/lib/posts";
 
 export function BlogGroupCard({ group }: { group: BlogGroup }) {
-  const href = `/explore/blog?group=${encodeURIComponent(group.id)}`;
+  const href = getBlogGroupHref(group.id);
 
   return (
     <Link

@@ -1,11 +1,13 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   getAllPosts,
   getBlogCategoryMeta,
   getBlogGroupById,
   getBlogGroups,
 } from "@/lib/posts";
+import { getBlogGroupHref } from "@/lib/blog-group-links";
 import { BlogGroupCard } from "@/components/blog-group-card";
 import { BlogCard } from "@/components/blog-card";
 
@@ -40,6 +42,10 @@ async function ExploreBlogContent({
           <p className="mt-10 text-ink/60">Group not found.</p>
         </div>
       );
+    }
+
+    if (group.id !== groupId) {
+      redirect(getBlogGroupHref(group.id));
     }
 
     return (

@@ -230,6 +230,19 @@ export function getBlogGroupSummary(category: string, group: string) {
   );
 }
 
+function getBlogGroupId(category: string, group: string) {
+  const slug = `${category}-${group}`
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return slug || "notes";
+}
+
 export type BlogGroup = {
   id: string;
   category: string;
@@ -249,7 +262,7 @@ export async function getBlogGroups(): Promise<BlogGroup[]> {
 
     if (!map.has(key)) {
       map.set(key, {
-        id: key,
+        id: getBlogGroupId(category, group),
         category,
         group,
         summary: getBlogGroupSummary(category, group),
@@ -269,7 +282,13 @@ export async function getBlogGroups(): Promise<BlogGroup[]> {
 
 export async function getBlogGroupById(id: string): Promise<BlogGroup | null> {
   const groups = await getBlogGroups();
-  return groups.find((group) => group.id === id) ?? null;
+  const direct = groups.find((group) => group.id === id);
+  if (direct) return direct;
+
+  // Keep old Category::Group links working while redirecting them to the slug.
+  return (
+    groups.find((group) => `${group.category}::${group.group}` === id) ?? null
+  );
 }
 
 
