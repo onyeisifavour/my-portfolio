@@ -12,6 +12,32 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        has: [{ type: "query", key: "tab", value: "blog" }],
+        destination: "/home?tab=blog",
+        permanent: false,
+      },
+      {
+        source: "/",
+        destination: "/home?tab=projects",
+        permanent: false,
+      },
+      {
+        source: "/home",
+        missing: [{ type: "query", key: "tab" }],
+        destination: "/home?tab=projects",
+        permanent: false,
+      },
+      {
+        source: "/latest-projects",
+        destination: "/projects/latest",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

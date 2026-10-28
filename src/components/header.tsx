@@ -5,8 +5,8 @@ import { SearchButton } from "@/components/search";
 import { site } from "@/lib/site";
 
 const nav = [
-  { href: "/?tab=projects#work", label: "Projects" },
-  { href: "/?tab=blog#work", label: "Blog" },
+  { href: "/home?tab=projects", label: "Projects" },
+  { href: "/home?tab=blog", label: "Blog" },
 ];
 
 export function Header() {
@@ -14,7 +14,7 @@ export function Header() {
     <header className="site-header animate-fade-in">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
         <Link
-          href="/"
+          href="/home?tab=projects"
           className="font-display text-lg font-semibold tracking-tight text-ink transition-opacity hover:opacity-70"
         >
           {site.name}

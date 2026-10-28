@@ -14,7 +14,9 @@ export async function PrefetchManifest() {
   const posts = await getAllPosts();
 
   const routes = [
-    "/",
+    "/home?tab=projects",
+    "/home?tab=blog",
+    "/projects/latest",
     "/explore/blog",
     "/explore/projects",
     ...explorePages

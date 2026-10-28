@@ -34,7 +34,7 @@ export default function LatestProjectsPage() {
     <main className="flex-1">
       <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
         <Link
-          href="/?tab=projects#work"
+          href="/home?tab=projects"
           className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-ink/60 uppercase transition-colors hover:text-accent"
         >
           <svg

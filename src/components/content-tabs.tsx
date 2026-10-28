@@ -23,19 +23,14 @@ export function ContentTabs({ posts }: { posts: PostMeta[] }) {
 
   function selectTab(next: Tab) {
     const params = new URLSearchParams(searchParams.toString());
-    if (next === "projects") {
-      params.delete("tab");
-    } else {
-      params.set("tab", next);
-    }
-    const query = params.toString();
+    params.set("tab", next);
     startTransition(() => {
-      router.replace(query ? `/?${query}#work` : "/#work", { scroll: false });
+      router.replace(`/home?${params.toString()}`, { scroll: false });
     });
   }
 
   return (
-    <section id="work" className="scroll-mt-24">
+    <section>
       <div className="mb-8 flex items-end justify-between gap-4 border-b border-ink/10">
         <div className="relative flex gap-1" role="tablist" aria-label="Work">
           {(

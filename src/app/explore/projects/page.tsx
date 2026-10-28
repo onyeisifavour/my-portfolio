@@ -29,7 +29,7 @@ async function ExploreContent({
 
   if (pageId === "latest") {
     const { redirect } = await import("next/navigation");
-    redirect("/latest-projects");
+    redirect("/projects/latest");
   }
 
   const openGroupId =
@@ -43,7 +43,7 @@ async function ExploreContent({
   return (
     <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
       <Link
-        href="/?tab=projects#work"
+        href="/home?tab=projects"
         className="font-mono text-xs tracking-wider text-ink/50 uppercase transition-colors hover:text-accent"
       >
         ← Back
