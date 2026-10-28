@@ -185,10 +185,56 @@ export async function getCompiledPost(
 }
 
 
+export type BlogCategoryMeta = {
+  heading: string;
+  description: string;
+};
+
+const blogCategoryMeta: Record<string, BlogCategoryMeta> = {
+  Code: {
+    heading: "Building with care.",
+    description: "Notes on code, craft, and building tools.",
+  },
+  Design: {
+    heading: "Designing for clearer screens.",
+    description: "Notes on design, study, and things I'm learning out loud.",
+  },
+  Rust: {
+    heading: "Working close to the metal.",
+    description: "Notes on Rust, CLIs, systems, and tooling.",
+  },
+};
+
+export function getBlogCategoryMeta(category: string): BlogCategoryMeta {
+  return (
+    blogCategoryMeta[category] ?? {
+      heading: `${category} notes.`,
+      description: `Writing filed under ${category}.`,
+    }
+  );
+}
+
+const blogGroupSummaries: Record<string, string> = {
+  "Code::Devlog":
+    "Process notes from building, shipping, and fixing software.",
+  "Design::Study":
+    "Type, layout, and the decisions that make a screen readable.",
+  "Rust::CLI":
+    "Small command-line tools and lessons from the terminal.",
+};
+
+export function getBlogGroupSummary(category: string, group: string) {
+  return (
+    blogGroupSummaries[`${category}::${group}`] ??
+    `Notes filed under ${group}.`
+  );
+}
+
 export type BlogGroup = {
   id: string;
   category: string;
   group: string;
+  summary: string;
   posts: PostMeta[];
 };
 
@@ -206,6 +252,7 @@ export async function getBlogGroups(): Promise<BlogGroup[]> {
         id: key,
         category,
         group,
+        summary: getBlogGroupSummary(category, group),
         posts: [],
       });
     }

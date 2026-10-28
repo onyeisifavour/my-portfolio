@@ -9,15 +9,23 @@ export function BlogGroupCard({ group }: { group: BlogGroup }) {
       href={href}
       className="group flex flex-col justify-between gap-4 border border-ink/12 bg-paper-deep px-5 py-5 transition-colors hover:border-accent/40 hover:bg-accent-soft/20 sm:px-6 sm:py-6"
     >
-      <div className="flex flex-col gap-2">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-ink/45 uppercase">
-          {group.category}
-        </p>
-        <h3 className="font-display text-xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-2xl">
-          {group.group}
-        </h3>
-        <p className="text-sm leading-6 text-ink/60">
-          {group.posts.length} {group.posts.length === 1 ? "post" : "posts"}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 flex-col gap-2">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-ink/45 uppercase">
+              {group.category}
+            </p>
+            <h3 className="font-display text-xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-2xl">
+              {group.group}
+            </h3>
+          </div>
+          <span className="shrink-0 font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
+            {group.posts.length}{" "}
+            {group.posts.length === 1 ? "post" : "posts"}
+          </span>
+        </div>
+        <p className="line-clamp-2 text-sm leading-6 text-ink/60">
+          {group.summary}
         </p>
       </div>
       <svg
