@@ -74,7 +74,7 @@ export default async function BlogLatestPage() {
                   </span>
                 </header>
 
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {preview.map((post) => (
                     <BlogCard key={post.slug} post={post} />
                   ))}
