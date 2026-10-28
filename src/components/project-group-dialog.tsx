@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { GroupProject, ProjectGroup } from "@/lib/project-groups";
+import { SearchFilters, type SearchFilter } from "@/components/search-filters";
 
 const STATUS_LABELS: Record<GroupProject["status"], string> = {
   live: "Live",
@@ -132,6 +133,13 @@ export function ProjectGroupDialog({
   const searchRef = useRef<HTMLInputElement>(null);
   const [showSearch, setShowSearch] = useState(false);
   const [filter, setFilter] = useState("");
+  const [activeFilters, setActiveFilters] = useState<SearchFilter[]>([]);
+
+  const closeSearch = useCallback(() => {
+    setShowSearch(false);
+    setFilter("");
+    setActiveFilters([]);
+  }, []);
 
   useEffect(() => {
     if (!group) return;
@@ -147,15 +155,14 @@ export function ProjectGroupDialog({
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
       if (showSearch) {
-        setShowSearch(false);
-        setFilter("");
+        closeSearch();
       } else {
         onClose();
       }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [group, onClose, showSearch]);
+  }, [group, onClose, showSearch, closeSearch]);
 
   if (!group) return null;
 
@@ -168,6 +175,14 @@ export function ProjectGroupDialog({
           .includes(query),
       )
     : group.projects;
+
+  function toggleFilter(nextFilter: SearchFilter) {
+    setActiveFilters((current) =>
+      current.includes(nextFilter)
+        ? current.filter((item) => item !== nextFilter)
+        : [...current, nextFilter],
+    );
+  }
 
   return (
     <div
@@ -191,13 +206,12 @@ export function ProjectGroupDialog({
             <button
               type="button"
               onClick={() => {
-                const opening = !showSearch;
-                setShowSearch(opening);
-                if (opening) {
-                  requestAnimationFrame(() => searchRef.current?.focus());
-                } else {
-                  setFilter("");
+                if (showSearch) {
+                  closeSearch();
+                  return;
                 }
+                setShowSearch(true);
+                requestAnimationFrame(() => searchRef.current?.focus());
               }}
               aria-label="Search within this group"
               aria-expanded={showSearch}
@@ -251,6 +265,12 @@ export function ProjectGroupDialog({
               aria-label="Filter projects"
               className="w-full bg-transparent font-mono text-xs text-ink placeholder:text-ink/35 focus:outline-none"
             />
+            <div className="mt-2.5">
+              <SearchFilters
+                active={activeFilters}
+                onToggle={toggleFilter}
+              />
+            </div>
           </div>
         )}
 

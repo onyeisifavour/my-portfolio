@@ -12,6 +12,8 @@ export async function GET() {
       description: post.description,
       tags: post.tags,
       date: post.date,
+      category: post.category ?? "",
+      group: post.group ?? "",
     })),
     groups: projectGroups.map((group) => ({
       id: group.id,
