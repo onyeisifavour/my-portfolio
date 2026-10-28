@@ -55,70 +55,6 @@ export const explorePages: ExplorePage[] = [
     heading: "Product work",
     description: "From concept to polished product.",
   },
-  {
-    id: "study-kits-2",
-    title: "Study kits 2",
-    pages: ["study"],
-    summary: "Additional study tools for focused learning.",
-    projects: [
-      {
-        slug: "flashdeck-2",
-        title: "Flashdeck 2",
-        about: "An enhanced spaced-repetition deck builder.",
-        tags: ["React", "TypeScript"],
-        status: "wip",
-        year: "2026",
-      },
-    ],
-  },
-  {
-    id: "study-kits-3",
-    title: "Study kits 3",
-    pages: ["study"],
-    summary: "More experimental study tools.",
-    projects: [
-      {
-        slug: "anki-tools",
-        title: "Anki Tools",
-        about: "Utilities for Anki flashcard workflows.",
-        tags: ["Python", "CLI"],
-        status: "live",
-        year: "2026",
-      },
-    ],
-  },
-  {
-    id: "study-kits-4",
-    title: "Study kits 4",
-    pages: ["study"],
-    summary: "More study resources.",
-    projects: [
-      {
-        slug: "quiz-builder",
-        title: "Quiz Builder",
-        about: "Build and practice with custom quizzes.",
-        tags: ["Next.js", "TypeScript"],
-        status: "wip",
-        year: "2026",
-      },
-    ],
-  },
-  {
-    id: "study-kits-5",
-    title: "Study kits 5",
-    pages: ["study"],
-    summary: "Extra study utilities.",
-    projects: [
-      {
-        slug: "note-sync",
-        title: "Note Sync",
-        about: "Sync notes across devices seamlessly.",
-        tags: ["Rust", "CLI"],
-        status: "live",
-        year: "2026",
-      },
-    ],
-  },
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];
@@ -324,38 +260,7 @@ export const projectGroups: ProjectGroup[] = [
       },
     ],
   },
-  {
-    id: "study-kits-2",
-    title: "Study kits 2",
-    pages: ["study"],
-    summary: "Additional study tools for focused learning.",
-    projects: [
-      {
-        slug: "flashdeck-2",
-        title: "Flashdeck 2",
-        about: "An enhanced spaced-repetition deck builder.",
-        tags: ["React", "TypeScript"],
-        status: "wip",
-        year: "2026",
-      },
-    ],
-  },
-  {
-    id: "study-kits-3",
-    title: "Study kits 3",
-    pages: ["study"],
-    summary: "More experimental study tools.",
-    projects: [
-      {
-        slug: "anki-tools",
-        title: "Anki Tools",
-        about: "Utilities for Anki flashcard workflows.",
-        tags: ["Python", "CLI"],
-        status: "live",
-        year: "2026",
-      },
-    ],
-  },
+
   {
     id: "study-kits-4",
     title: "Study kits 4",

@@ -2,12 +2,28 @@
 
 import type { GroupProject, ProjectGroup } from "@/lib/project-groups";
 
-const CELL_CLASSES = [
+const CELL_CLASSES_4 = [
   "border-b border-r border-ink/10",
   "border-b border-ink/10",
   "border-r border-ink/10",
   "",
 ];
+
+function getCellClasses(count: number, index: number) {
+  if (count === 1) return "";
+  if (count === 2) {
+    if (index === 0) return "border-r border-ink/10";
+    return "";
+  }
+  if (count === 3) {
+    if (index === 0) return "border-b border-r border-ink/10";
+    if (index === 1) return "border-b border-ink/10";
+    if (index === 2) return "col-span-2 border-ink/10";
+    return "";
+  }
+  if (count === 4) return CELL_CLASSES_4[index] ?? "";
+  return "";
+}
 
 function Cell({
   project,
@@ -80,7 +96,11 @@ export function ProjectGroupCard({
 
       <div className="grid grid-cols-2">
         {preview.map((project, i) => (
-          <Cell key={project.slug} project={project} cellClass={CELL_CLASSES[i]} />
+          <Cell
+            key={project.slug}
+            project={project}
+            cellClass={getCellClasses(preview.length, i)}
+          />
         ))}
       </div>
 
