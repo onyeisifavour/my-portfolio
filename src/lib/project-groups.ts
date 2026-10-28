@@ -89,6 +89,60 @@ export const explorePages: ExplorePage[] = [
     ],
   },
 
+  {
+    id: "creatives-extra-1",
+    title: "Creatives Extra 1",
+    pages: ["creatives"],
+    summary: "Extra creative experiments.",
+    projects: [
+      { slug: "neon-grid", title: "Neon Grid", about: "Glowing grid experiments.", tags: ["CSS", "JS"], status: "live", year: "2026" },
+    ],
+  },
+  {
+    id: "creatives-extra-2",
+    title: "Creatives Extra 2",
+    pages: ["creatives"],
+    summary: "More visual experiments.",
+    projects: [
+      { slug: "color-lab", title: "Color Lab", about: "Color palette exploration.", tags: ["Figma", "CSS"], status: "wip", year: "2026" },
+    ],
+  },
+  {
+    id: "gigs-extra-1",
+    title: "Gigs Extra 1",
+    pages: ["gigs"],
+    summary: "Extra client work.",
+    projects: [
+      { slug: "agency-site", title: "Agency Site", about: "Agency landing page.", tags: ["Next.js", "Tailwind"], status: "live", year: "2026" },
+    ],
+  },
+  {
+    id: "gigs-extra-2",
+    title: "Gigs Extra 2",
+    pages: ["gigs"],
+    summary: "More client projects.",
+    projects: [
+      { slug: "portfolio-clone", title: "Portfolio Clone", about: "Portfolio redesign.", tags: ["React", "CSS"], status: "live", year: "2026" },
+    ],
+  },
+  {
+    id: "products-extra-1",
+    title: "Products Extra 1",
+    pages: ["products"],
+    summary: "Extra product builds.",
+    projects: [
+      { slug: "dash-pro", title: "Dash Pro", about: "Analytics dashboard.", tags: ["Next.js", "Postgres"], status: "wip", year: "2026" },
+    ],
+  },
+  {
+    id: "products-extra-2",
+    title: "Products Extra 2",
+    pages: ["products"],
+    summary: "More product tools.",
+    projects: [
+      { slug: "api-tool", title: "API Tool", about: "API testing utility.", tags: ["TypeScript", "Node"], status: "live", year: "2026" },
+    ],
+  },
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];
