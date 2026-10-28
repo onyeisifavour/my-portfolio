@@ -55,6 +55,40 @@ export const explorePages: ExplorePage[] = [
     heading: "Product work",
     description: "From concept to polished product.",
   },
+
+  {
+    id: "study-extra-1",
+    title: "Study Extra 1",
+    pages: ["study"],
+    summary: "Extra study tools.",
+    projects: [
+      {
+        slug: "flashcard-pro",
+        title: "Flashcard Pro",
+        about: "Advanced flashcard system.",
+        tags: ["React", "TypeScript"],
+        status: "wip",
+        year: "2026",
+      },
+    ],
+  },
+  {
+    id: "study-extra-2",
+    title: "Study Extra 2",
+    pages: ["study"],
+    summary: "More study resources.",
+    projects: [
+      {
+        slug: "quiz-master",
+        title: "Quiz Master",
+        about: "Quiz generation and practice.",
+        tags: ["Next.js", "TypeScript"],
+        status: "live",
+        year: "2026",
+      },
+    ],
+  },
+
 ];
 
 export const landingExplorePages = ["study", "creatives", "gigs", "products"];

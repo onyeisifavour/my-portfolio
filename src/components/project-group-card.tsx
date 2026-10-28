@@ -33,7 +33,7 @@ function Cell({
   cellClass: string;
 }) {
   return (
-    <div className={`flex min-h-[104px] flex-col gap-1.5 overflow-hidden p-3 ${cellClass}`}>
+    <div className={`flex h-full min-h-[104px] flex-col gap-1.5 overflow-hidden p-3 ${cellClass}`}>
       <h4 className="font-display text-[13px] leading-tight font-semibold tracking-tight text-ink">
         {project.title}
       </h4>
