@@ -58,7 +58,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const hasLive = Boolean(liveUrl);
   const hasGithub = Boolean(githubUrl);
-  const href = hrefProp || (slug ? `/projects/${slug}` : hasLive ? liveUrl : hasGithub ? githubUrl : "#");
+  const href = hrefProp || (slug ? `/projects/${slug}` : hasLive && liveUrl ? liveUrl : hasGithub && githubUrl ? githubUrl : "#");
   const isExternal = href.startsWith("http") && !href.includes("/projects/");
 
   const normalizedStatus = status === "shipped" ? "live" : status;
