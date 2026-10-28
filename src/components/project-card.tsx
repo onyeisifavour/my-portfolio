@@ -6,6 +6,8 @@ export type ProjectCardProps = {
   githubUrl?: string;
   status?: "shipped" | "wip" | "archived";
   className?: string;
+  group?: string;
+  year?: string;
 };
 
 const statusLabel = {
@@ -13,6 +15,23 @@ const statusLabel = {
   wip: "In progress",
   archived: "Archived",
 } as const;
+
+function ArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="size-3.5 text-ink/50 transition-all group-hover:translate-x-1 group-hover:text-accent"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
 
 export function ProjectCard({
   title,
@@ -22,68 +41,64 @@ export function ProjectCard({
   githubUrl,
   status,
   className = "",
+  group,
+  year,
 }: ProjectCardProps) {
   const hasLive = Boolean(liveUrl);
   const hasGithub = Boolean(githubUrl);
+  const href = hasLive ? liveUrl : hasGithub ? githubUrl : "#";
 
   return (
-    <article
-      className={`group flex h-full flex-col border border-ink/10 bg-paper/40 p-5 transition-colors hover:border-accent/35 hover:bg-accent-soft/25 sm:p-6 ${className}`.trim()}
+    <a
+      href={href}
+      target={hasLive || hasGithub ? "_blank" : undefined}
+      rel={hasLive || hasGithub ? "noopener noreferrer" : undefined}
+      className={`group flex h-full flex-col border border-ink/10 bg-paper/40 transition-all hover:border-accent/45 hover:bg-accent-soft/15 ${className}`.trim()}
     >
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <h3 className="font-display text-xl tracking-tight text-ink transition-colors group-hover:text-accent sm:text-2xl">
-          {title}
-        </h3>
+      <header className="flex items-start justify-between gap-3 border-b border-ink/10 px-4 py-3.5 sm:px-5">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          {group && (
+            <span className="font-mono text-[10px] tracking-[0.14em] text-accent uppercase">
+              {group}
+            </span>
+          )}
+          <h3 className="font-display text-xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-[1.25rem]">
+            {title}
+          </h3>
+        </div>
         {status && (
-          <span className="font-mono text-[11px] tracking-wider text-ink/45 uppercase">
+          <span className="shrink-0 font-mono text-[11px] tracking-wider text-ink/45 uppercase">
             {statusLabel[status]}
           </span>
         )}
-      </div>
+      </header>
 
-      <p className="mt-3 flex-1 text-base leading-7 text-ink/70">{description}</p>
+      <div className="flex flex-1 flex-col gap-4 px-4 py-4 sm:px-5">
+        <p className="text-sm leading-[1.65] text-ink/62 sm:text-[14px]">
+          {description}
+        </p>
 
-      {techStack.length > 0 && (
-        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
-          {techStack.map((tech) => (
-            <li
-              key={tech}
-              className="border border-ink/12 bg-ink/[0.03] px-2 py-1 font-mono text-[11px] tracking-wide text-ink/65"
-            >
-              {tech}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-ink/8 pt-4 text-sm">
-        {hasLive && (
-          <a
-            href={liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-medium text-ink underline decoration-ink/20 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-          >
-            Live preview
-            <ExternalIcon />
-          </a>
-        )}
-        {hasGithub && (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-medium text-ink/60 underline decoration-ink/15 underline-offset-4 transition-colors hover:text-ink hover:decoration-accent"
-          >
-            GitHub
-            <GitHubIcon />
-          </a>
-        )}
-        {!hasLive && !hasGithub && (
-          <span className="text-ink/40">Coming soon</span>
+        {techStack.length > 0 && (
+          <ul className="mt-auto flex flex-wrap items-center gap-1.5" aria-label="Tech stack">
+            {techStack.map((tech) => (
+              <li
+                key={tech}
+                className="border border-ink/12 px-2 py-0.5 font-mono text-[9.5px] tracking-[0.06em] uppercase text-ink/60"
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
-    </article>
+
+      <footer className="mt-auto flex items-center justify-between gap-3 border-t border-ink/10 px-4 py-3 sm:px-5">
+        <span className="font-mono text-[10px] tracking-[0.08em] uppercase text-ink/50">
+          {year || ""}
+        </span>
+        <ArrowIcon />
+      </footer>
+    </a>
   );
 }
 
