@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { BlogReadingScript } from "@/components/blog-reading-script";
 import { getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { site } from "@/lib/site";
@@ -51,6 +51,10 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
   const post = await getPostBySlug(slug);
 
   if (!post) notFound();
+
+  if (post.slug !== slug) {
+    redirect(`/blog/${post.slug}`);
+  }
 
   const author = post.author || site.name;
   const initials = initialsOf(author);

@@ -17,10 +17,14 @@ export type PostFrontmatter = {
   author?: string;
   category?: string;
   group?: string;
+  /** URL id for the post. Defaults to the MDX filename when omitted. */
+  slug?: string;
 };
 
 export type PostMeta = PostFrontmatter & {
   slug: string;
+  /** MDX filename without the extension, used to resolve old links. */
+  sourceSlug: string;
   readingTime: string;
 };
 
@@ -48,10 +52,15 @@ function normalizeFrontmatter(
   };
 }
 
-function toMeta(slug: string, data: Record<string, unknown>, body: string): PostMeta {
+function toMeta(
+  sourceSlug: string,
+  data: Record<string, unknown>,
+  body: string,
+): PostMeta {
   return {
-    slug,
-    ...normalizeFrontmatter(data, slug),
+    slug: data.slug ? String(data.slug) : sourceSlug,
+    sourceSlug,
+    ...normalizeFrontmatter(data, sourceSlug),
     readingTime: readingTime(body).text,
   };
 }
@@ -103,8 +112,8 @@ export function parsePostSource(slug: string, raw: string): Post {
  * Slugs used by generateStaticParams for /blog/[slug].
  */
 export async function getPostSlugs() {
-  const files = await getPostFilenames();
-  return files.map((file) => file.replace(/\.mdx?$/, ""));
+  const posts = await getAllPosts();
+  return posts.map((post) => post.slug);
 }
 
 /**
@@ -134,11 +143,21 @@ export async function getAllPosts(): Promise<PostMeta[]> {
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   "use cache";
 
-  const fullPath = await resolvePostPath(slug);
-  if (!fullPath) return null;
+  const directPath = await resolvePostPath(slug);
+  if (directPath) {
+    const raw = await fs.readFile(directPath, "utf8");
+    return parsePostSource(slug, raw);
+  }
 
-  const raw = await fs.readFile(fullPath, "utf8");
-  return parsePostSource(slug, raw);
+  const posts = await getAllPosts();
+  const match = posts.find((post) => post.slug === slug);
+  if (!match) return null;
+
+  const sourcePath = await resolvePostPath(match.sourceSlug);
+  if (!sourcePath) return null;
+
+  const raw = await fs.readFile(sourcePath, "utf8");
+  return parsePostSource(match.sourceSlug, raw);
 }
 
 /**
@@ -172,6 +191,7 @@ export async function getCompiledPost(
 
   return {
     slug: post.slug,
+    sourceSlug: post.sourceSlug,
     title: post.title,
     description: post.description,
     date: post.date,

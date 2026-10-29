@@ -46,6 +46,21 @@ const nextConfig: NextConfig = {
         destination: "/projects/category/:category",
         permanent: false,
       },
+      {
+        source: "/blog/designing-a-quiet-file-browser",
+        destination: "/blog/quiet-file-browser",
+        permanent: false,
+      },
+      {
+        source: "/blog/readable-type-on-the-web",
+        destination: "/blog/readable-type",
+        permanent: false,
+      },
+      {
+        source: "/blog/shipping-freckle-by-freckle",
+        destination: "/blog/shipping-freckle",
+        permanent: false,
+      },
     ];
   },
 };
